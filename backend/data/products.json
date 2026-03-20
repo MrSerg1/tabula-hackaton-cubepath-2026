@@ -1,0 +1,10 @@
+[
+  {
+    "id": 1,
+    "nombre": "Hamburguesa Tabula",
+    "precio": 12.50,
+    "categoria": "principales",
+    "descripcion": "Carne premium con queso cheddar.",
+    "imagen": "url_de_imagen"
+  }
+]
