@@ -35,7 +35,13 @@ export const useCartStore = create((set) => ({
             ),
           };
         }
+
+        return {
+          cart: state.cart.filter((item) => item.id !== productId),
+        };
       }
+
+      return state;
     });
   },
 }));

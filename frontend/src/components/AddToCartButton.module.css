@@ -1,0 +1,128 @@
+.shell {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  min-width: 2.45rem;
+  min-height: 2.45rem;
+}
+
+.actionWrap {
+  position: relative;
+}
+
+.addButton {
+  width: 2.45rem;
+  height: 2.45rem;
+  border: 1.5px solid #f4a261;
+  border-radius: 999px;
+  background: transparent;
+  color: #c2410c;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(154, 52, 18, 0.08);
+  transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease,
+    border-color 160ms ease;
+}
+
+.addButton:hover {
+  transform: translateY(-1px) scale(1.03);
+  background: rgba(249, 115, 22, 0.08);
+  border-color: #ea580c;
+  box-shadow: 0 8px 18px rgba(154, 52, 18, 0.12);
+}
+
+.addButton:focus-visible,
+.stepButton:focus-visible {
+  outline: 3px solid #fed7aa;
+  outline-offset: 2px;
+}
+
+.addButton svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.stepButton svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.addHint {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 0.42rem);
+  transform: translateY(4px) scale(0.96);
+  padding: 0.26rem 0.5rem;
+  border-radius: 0.45rem;
+  background: #2c1709;
+  color: #fff9f2;
+  font-family: 'Manrope', 'Segoe UI', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1.1;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 120ms ease, transform 120ms ease;
+  white-space: nowrap;
+}
+
+.addButton:hover .addHint,
+.addButton:focus-visible .addHint {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.quantityControl {
+  height: 2.7rem;
+  padding: 0.22rem;
+  border-radius: 999px;
+  border: 1px solid #fed7aa;
+  background: #fff4e8;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.28rem;
+  overflow: hidden;
+  box-shadow: 0 8px 18px rgba(154, 52, 18, 0.12);
+}
+
+.stepButton {
+  width: 2.05rem;
+  height: 2.05rem;
+  border: 0;
+  border-radius: 999px;
+  background: #fffdf9;
+  color: #c2410c;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(154, 52, 18, 0.1);
+  transition: transform 160ms ease, background-color 160ms ease;
+}
+
+.stepButton:hover {
+  transform: scale(1.03);
+  background: #fff7ef;
+}
+
+.stepButtonAccent {
+  background: linear-gradient(145deg, #f97316 0%, #c2410c 100%);
+  color: #fffaf5;
+}
+
+.stepButtonAccent:hover {
+  background: linear-gradient(145deg, #fb923c 0%, #c2410c 100%);
+}
+
+.quantityValue {
+  min-width: 1.15rem;
+  text-align: center;
+  color: #9a3412;
+  font-family: 'Manrope', 'Segoe UI', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 800;
+  line-height: 1;
+}

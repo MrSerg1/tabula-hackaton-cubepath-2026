@@ -1,0 +1,15 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="foodBg" x1="0" y1="0" x2="1200" y2="900" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFE7D1"/>
+      <stop offset="1" stop-color="#FFD0A8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="900" fill="url(#foodBg)"/>
+  <rect x="98" y="76" width="1004" height="748" rx="36" fill="#FFF9F2" stroke="#EFA067" stroke-width="12"/>
+  <circle cx="600" cy="360" r="162" fill="#FFD8B6"/>
+  <path d="M494 392C530 336 584 304 648 300C700 296 744 316 774 352" stroke="#BE5B1F" stroke-width="24" stroke-linecap="round"/>
+  <path d="M488 470C544 510 610 528 688 512" stroke="#BE5B1F" stroke-width="24" stroke-linecap="round"/>
+  <rect x="388" y="600" width="424" height="88" rx="20" fill="#FFB878"/>
+  <text x="600" y="655" text-anchor="middle" fill="#6D2F0F" font-family="Segoe UI, Arial, sans-serif" font-size="52" font-weight="700">Cambia la imagen</text>
+</svg>

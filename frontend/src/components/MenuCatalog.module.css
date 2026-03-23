@@ -1,0 +1,203 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;700&display=swap');
+
+:root {
+  --menu-bg: #fff7eb;
+  --menu-surface: #fffefa;
+  --menu-primary: #b54708;
+  --menu-accent: #ef6f2e;
+  --menu-ink: #2c1709;
+  --menu-subtle: #5d4a40;
+  --menu-border: #f4d2b8;
+}
+
+.menuShell {
+  min-height: 100svh;
+  background:
+    radial-gradient(circle at top right, #ffd6b8 0%, rgba(255, 214, 184, 0) 48%),
+    linear-gradient(165deg, #fff2df 0%, var(--menu-bg) 46%, #fffef9 100%);
+  padding: 1.2rem 1rem 5.6rem;
+}
+
+.menuHead {
+  max-width: 72ch;
+  margin: 0 auto 1.1rem;
+  text-align: left;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin: 0 0 0.55rem;
+  padding: 0.38rem 0.76rem;
+  border-radius: 999px;
+  background: #ffe8d6;
+  color: var(--menu-primary);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.menuHead h1 {
+  margin: 0;
+  color: var(--menu-ink);
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(1.85rem, 7vw, 2.8rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+.menuSubtitle {
+  margin-top: 0.8rem;
+  color: var(--menu-subtle);
+  font-family: 'Manrope', 'Segoe UI', sans-serif;
+  font-size: 0.98rem;
+  max-width: 58ch;
+}
+
+.menuGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.95rem;
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.dishCard {
+  display: grid;
+  grid-template-columns: 118px 1fr;
+  gap: 0.85rem;
+  align-items: center;
+  border-radius: 1rem;
+  border: 1px solid var(--menu-border);
+  background: var(--menu-surface);
+  padding: 0.62rem;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(112, 54, 19, 0.09);
+}
+
+.dishMediaWrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.82rem 0 0 0.82rem;
+  aspect-ratio: auto;
+  align-self: stretch;
+  margin: -0.62rem 0 -0.62rem -0.62rem;
+  min-height: calc(100% + 1.24rem);
+}
+
+.dishMedia {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 240ms ease;
+}
+
+.dishCard:hover .dishMedia {
+  transform: scale(1.04);
+}
+
+.dishBody {
+  position: relative;
+  padding-bottom: 3rem;
+}
+
+.cardActionSlot {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.dishBody h2 {
+  margin: 0;
+  color: var(--menu-ink);
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(1.02rem, 4vw, 1.2rem);
+  line-height: 1.2;
+}
+
+.dishBody p {
+  margin: 0.42rem 0 0;
+  color: var(--menu-subtle);
+  font-family: 'Manrope', 'Segoe UI', sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.42;
+}
+
+.dishFooter {
+  margin-top: 0.56rem;
+}
+
+.footerText {
+  margin: 0.32rem 0 0;
+  color: var(--menu-subtle);
+  font-family: 'Manrope', 'Segoe UI', sans-serif;
+  font-size: 0.76rem;
+  line-height: 1.35;
+}
+
+.ingredientsList {
+  list-style: none;
+  margin: 0.35rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28rem;
+}
+
+.ingredientTag {
+  padding: 0.16rem 0.42rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--menu-border) 68%, #ffffff 32%);
+  background: color-mix(in srgb, #fff3e6 74%, #ffffff 26%);
+  color: color-mix(in srgb, var(--menu-subtle) 82%, #000000 18%);
+  font-family: 'Manrope', 'Segoe UI', sans-serif;
+  font-size: 0.69rem;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+@media (min-width: 640px) {
+  .menuShell {
+    padding: 1.8rem 1.2rem 3rem;
+  }
+
+  .menuGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .dishCard {
+    grid-template-columns: 132px 1fr;
+    padding: 0.74rem;
+  }
+
+  .dishMediaWrap {
+    margin: -0.74rem 0 -0.74rem -0.74rem;
+    min-height: calc(100% + 1.48rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .menuShell {
+    padding: 2.1rem 1.4rem 4rem;
+  }
+
+  .menuGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.2rem;
+  }
+
+  .dishCard {
+    grid-template-columns: 1fr;
+    align-items: start;
+    padding: 0.8rem;
+  }
+
+  .dishMediaWrap {
+    margin: -0.8rem -0.8rem 0;
+    min-height: auto;
+    border-radius: 0.82rem 0.82rem 0 0;
+    aspect-ratio: 16 / 10;
+  }
+}

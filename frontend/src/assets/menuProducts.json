@@ -1,0 +1,44 @@
+[
+  {
+    "id": "menu-1",
+    "title": "Tacos de birria",
+    "description": "Tortilla dorada, birria jugosa y cebolla fresca con un toque de limon.",
+    "ingredients": ["tortilla", "birria", "cebolla", "cilantro", "limon"],
+    "image": "https://nutriscan.app/calories-nutrition/images/birria-tacos-2d445.webp"
+  },
+  {
+    "id": "menu-2",
+    "title": "Bowl de poke tropical",
+    "description": "Arroz de sushi, salmon marinado, mango, pepino y aderezo de ajonjoli.",
+    "ingredients": ["arroz", "salmon", "mango", "pepino", "ajonjoli"],
+    "image": "/placeholders/food-placeholder.svg"
+  },
+  {
+    "id": "menu-3",
+    "title": "Hamburguesa smash",
+    "description": "Doble carne sellada, queso derretido y salsa especial en pan brioche.",
+    "ingredients": ["pan brioche", "carne", "queso cheddar", "pepinillos", "salsa especial"],
+    "image": "/placeholders/food-placeholder.svg"
+  },
+  {
+    "id": "menu-4",
+    "title": "Pasta cremosa al pesto",
+    "description": "Fettuccine con pesto casero, parmesano y tomates rostizados.",
+    "ingredients": ["fettuccine", "albahaca", "parmesano", "ajo", "tomates"],
+    "image": "/placeholders/food-placeholder.svg"
+  },
+  {
+    "id": "menu-5",
+    "title": "Ensalada mediterranea",
+    "description": "Lechugas frescas, queso feta, aceitunas y vinagreta de oregano.",
+    "ingredients": ["lechuga", "queso feta", "aceitunas", "pepino", "oregano"],
+    "image": "/placeholders/food-placeholder.svg"
+  },
+  {
+    "id": "menu-6",
+    "title": "Rollitos vietnamitas",
+    "description": "Papel de arroz, vegetales crocantes y salsa de cacahuate especiada.",
+    "ingredients": ["papel de arroz", "zanahoria", "pepino", "menta", "cacahuate"],
+    "image": "/placeholders/food-placeholder.svg"
+  }
+]
