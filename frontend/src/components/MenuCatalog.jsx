@@ -35,9 +35,9 @@ export function MenuCatalog() {
     <section className={styles.menuShell} aria-labelledby="menu-title">
       <div className={styles.menuHead}>
         <p className={styles.eyebrow}>Menú del día</p>
-        <h1 id="menu-title">Comidas que abren el apetito</h1>
+        <h1 id="menu-title">Tabula Food</h1>
         <p className={styles.menuSubtitle}>
-          Agrega o reemplaza productos editando el archivo JSON y cambiando la ruta de la imagen.
+          Menú prototipo para <strong>demostración</strong>.
         </p>
       </div>
 

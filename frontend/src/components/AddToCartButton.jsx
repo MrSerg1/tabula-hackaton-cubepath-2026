@@ -61,7 +61,7 @@ export function AddToCartButton({ quantity, onAdd, onRemove, productTitle }) {
             >
               <PlusIcon />
               <span className={styles.addHint} aria-hidden="true">
-                Agregar
+                Pedir
               </span>
             </button>
           </motion.div>
