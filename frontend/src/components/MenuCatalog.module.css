@@ -108,6 +108,37 @@
   bottom: 0;
 }
 
+.actionRow {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.actionPriceTag {
+  height: 2.45rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.75rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #fff8ef 0%, #fff2e3 100%);
+  color: #7b320c;
+  border: 1px solid #f8d8bb;
+  font-family: 'Manrope', 'Segoe UI', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  box-shadow: 0 4px 10px rgba(143, 53, 8, 0.09);
+  white-space: nowrap;
+  transition: height 220ms ease, background 220ms ease, box-shadow 220ms ease, color 220ms ease;
+}
+
+.actionPriceTagExpanded {
+  height: 2.7rem;
+  background: linear-gradient(135deg, #fff6eb 0%, #ffeeda 100%);
+  box-shadow: 0 7px 16px rgba(143, 53, 8, 0.12);
+}
+
 .dishBody h2 {
   margin: 0;
   color: var(--menu-ink);
@@ -146,6 +177,8 @@
 }
 
 .ingredientTag {
+  border: 0;
+  cursor: pointer;
   padding: 0.16rem 0.42rem;
   border-radius: 999px;
   border: 1px solid color-mix(in srgb, var(--menu-border) 68%, #ffffff 32%);
@@ -155,6 +188,23 @@
   font-size: 0.69rem;
   line-height: 1.2;
   white-space: nowrap;
+  transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease,
+    transform 140ms ease;
+}
+
+.ingredientTag:hover {
+  transform: translateY(-1px);
+}
+
+.ingredientTag:focus-visible {
+  outline: 3px solid #fed7aa;
+  outline-offset: 1px;
+}
+
+.ingredientTagSelected {
+  background: #c57a41;
+  border-color: #ad632d;
+  color: #fff8f1;
 }
 
 @media (min-width: 640px) {

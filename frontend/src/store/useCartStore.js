@@ -2,6 +2,7 @@ import { create } from "zustand";
 
 export const useCartStore = create((set) => ({
   cart: [],
+  setCart: (nextCart) => set({ cart: nextCart }),
   // add product to cart or increse quantity if already exists
   addToCart: (product) => {
     set((state) => {

@@ -3,13 +3,17 @@ import { Routes, Route } from 'react-router-dom';
 // import pages
 import { Home } from './pages/Home';
 import { Login } from './pages/Login';
+import { MesaProvider } from './context/MesaContext';
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-    </Routes>
+    <MesaProvider>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/menu" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </MesaProvider>
   )
 }
 
