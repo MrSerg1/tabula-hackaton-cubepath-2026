@@ -1,48 +1,63 @@
-import { create } from "zustand";
+import { create } from 'zustand';
+
+// Unique key per (product + ingredient combination)
+export function cartItemKey(productId, excludedIngredients) {
+  return `${productId}::${[...excludedIngredients].sort().join(',')}`;
+}
+
+function ensureCartKey(item) {
+  if (item.cartKey) return item;
+  return { ...item, cartKey: cartItemKey(item.id, item.excludedIngredients ?? []) };
+}
 
 export const useCartStore = create((set) => ({
   cart: [],
-  setCart: (nextCart) => set({ cart: nextCart }),
-  // add product to cart or increase quantity if already exists
+
+  // Normalize items on hydration (e.g. from URL sync)
+  setCart: (nextCart) => set({ cart: nextCart.map(ensureCartKey) }),
+
+  // Same product + same excluded ingredients → increment quantity
+  // Same product + different excluded ingredients → new entry
   addToCart: (product, excludedIngredients = []) => {
+    const key = cartItemKey(product.id, excludedIngredients);
     set((state) => {
-      const existingProduct = state.cart.find((item) => item.id === product.id);
-      if (existingProduct) {
+      const existing = state.cart.find((item) => item.cartKey === key);
+      if (existing) {
         return {
           cart: state.cart.map((item) =>
-            item.id === product.id
-              ? { ...item, quantity: item.quantity + 1, excludedIngredients }
-              : item,
+            item.cartKey === key ? { ...item, quantity: item.quantity + 1 } : item,
           ),
         };
-      } else {
-        return {
-          cart: [...state.cart, { ...product, quantity: 1, excludedIngredients }],
-        };
       }
+      return {
+        cart: [
+          ...state.cart,
+          { ...product, quantity: 1, excludedIngredients, cartKey: key },
+        ],
+      };
     });
   },
-  // remove product from cart or decrease quantity if more than 1
-  removeFromCart: (productId) => {
+
+  // Decrement quantity or remove entry if quantity reaches 0
+  removeFromCart: (cartKey) => {
     set((state) => {
-      const existingProduct = state.cart.find((item) => item.id === productId);
-      if (existingProduct) {
-        if (existingProduct.quantity > 1) {
-          return {
-            cart: state.cart.map((item) =>
-              item.id === productId
-                ? { ...item, quantity: item.quantity - 1 }
-                : item,
-            ),
-          };
-        }
-
+      const existing = state.cart.find((item) => item.cartKey === cartKey);
+      if (!existing) return state;
+      if (existing.quantity > 1) {
         return {
-          cart: state.cart.filter((item) => item.id !== productId),
+          cart: state.cart.map((item) =>
+            item.cartKey === cartKey ? { ...item, quantity: item.quantity - 1 } : item,
+          ),
         };
       }
-
-      return state;
+      return { cart: state.cart.filter((item) => item.cartKey !== cartKey) };
     });
   },
+
+  // Remove an entry entirely regardless of quantity
+  deleteCartItem: (cartKey) => {
+    set((state) => ({ cart: state.cart.filter((item) => item.cartKey !== cartKey) }));
+  },
+
+  clearCart: () => set({ cart: [] }),
 }));

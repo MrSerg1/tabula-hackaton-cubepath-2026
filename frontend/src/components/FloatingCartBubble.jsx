@@ -22,7 +22,7 @@ function createParticle(index) {
   };
 }
 
-export function FloatingCartBubble({ itemCount = 0 }) {
+export function FloatingCartBubble({ itemCount = 0, onClick }) {
   const [bursts, setBursts] = useState([]);
   const previousCountRef = useRef(itemCount);
   const burstIdRef = useRef(0);
@@ -63,6 +63,7 @@ export function FloatingCartBubble({ itemCount = 0 }) {
   return (
     <motion.button
       type="button"
+      onClick={onClick}
       className={styles.floatingCart}
       aria-label={`Abrir carrito con ${itemCount} productos`}
       animate={
