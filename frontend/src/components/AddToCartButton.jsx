@@ -69,7 +69,7 @@ export function AddToCartButton({ quantity, onAdd, onRemove, productTitle }) {
           <motion.div
             key="quantity"
             initial={{ width: 42, opacity: 0 }}
-            animate={{ width: 126, opacity: 1 }}
+            animate={{ width: 108, opacity: 1 }}
             exit={{ width: 42, opacity: 0 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
             className={styles.quantityControl}

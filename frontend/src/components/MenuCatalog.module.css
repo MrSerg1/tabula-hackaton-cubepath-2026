@@ -181,19 +181,22 @@
   cursor: pointer;
   padding: 0.16rem 0.42rem;
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--menu-border) 68%, #ffffff 32%);
-  background: color-mix(in srgb, #fff3e6 74%, #ffffff 26%);
-  color: color-mix(in srgb, var(--menu-subtle) 82%, #000000 18%);
+  border: 1px solid color-mix(in srgb, var(--menu-accent) 58%, #ffffff 42%);
+  background: color-mix(in srgb, #fff3e6 82%, #ffffff 18%);
+  color: color-mix(in srgb, var(--menu-ink) 74%, var(--menu-subtle) 26%);
   font-family: 'Manrope', 'Segoe UI', sans-serif;
   font-size: 0.69rem;
+  font-weight: 600;
   line-height: 1.2;
   white-space: nowrap;
   transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease,
-    transform 140ms ease;
+    transform 140ms ease, opacity 180ms ease, text-decoration-color 180ms ease;
 }
 
 .ingredientTag:hover {
   transform: translateY(-1px);
+  border-color: var(--menu-accent);
+  background: #fff0df;
 }
 
 .ingredientTag:focus-visible {
@@ -202,9 +205,18 @@
 }
 
 .ingredientTagSelected {
-  background: #c57a41;
-  border-color: #ad632d;
-  color: #fff8f1;
+  background: #f3e4d7;
+  border-color: #d28b57;
+  color: #7a4b2d;
+  opacity: 0.82;
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: #b45309;
+}
+
+.ingredientTagSelected:hover {
+  background: #efdccd;
+  border-color: #c97335;
 }
 
 @media (min-width: 640px) {

@@ -151,8 +151,6 @@ export function TableActionsButton({ onAction }) {
 
   return (
     <div ref={containerRef} className={styles.wrapper}>
-      {isOpen && <ActionsMenu onAction={handleAction} />}
-
       <button
         type="button"
         onClick={toggle}
@@ -162,6 +160,8 @@ export function TableActionsButton({ onAction }) {
       >
         <BellIcon />
       </button>
+
+      {isOpen && <ActionsMenu onAction={handleAction} />}
     </div>
   );
 }

@@ -14,6 +14,8 @@
   box-shadow: 0 14px 32px rgba(130, 49, 10, 0.35);
   cursor: pointer;
   z-index: 40;
+  overflow: visible;
+  isolation: isolate;
   transition: transform 160ms ease, box-shadow 160ms ease;
 }
 
@@ -28,8 +30,45 @@
 }
 
 .floatingCart svg {
+  position: relative;
+  z-index: 1;
   width: 1.3rem;
   height: 1.3rem;
+}
+
+.particleLayer {
+  position: absolute;
+  inset: -1.7rem;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 0;
+}
+
+.particleBurst {
+  position: absolute;
+  inset: 0;
+}
+
+.particle,
+.particleGlow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.particle {
+  border-radius: 999px;
+  box-shadow:
+    0 0 0 1px rgba(255, 247, 237, 0.22),
+    0 6px 14px rgba(194, 65, 12, 0.24);
+}
+
+.particleGlow {
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(251, 146, 60, 0.38) 0%, rgba(251, 146, 60, 0) 72%);
 }
 
 .badge {
@@ -48,6 +87,7 @@
   font-weight: 800;
   line-height: 1.1rem;
   text-align: center;
+  z-index: 1;
 }
 
 @media (min-width: 768px) {
