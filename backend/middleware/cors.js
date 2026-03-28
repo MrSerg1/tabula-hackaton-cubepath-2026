@@ -1,13 +1,19 @@
 import cors from "cors";
 
-const ALLOWED_ORIGINS = process.env.CORS_ALLOWED_ORIGINS 
-  ? process.env.CORS_ALLOWED_ORIGINS.split(',') 
-  : [];
+const getAllowedOrigins = () => {
+  const envOrigins = process.env.CORS_ALLOWED_ORIGINS || '';
+  return envOrigins
+    .split(',')
+    .map(origin => origin.trim())
+    .filter(origin => origin.length > 0);
+};
+
+export const corsMiddleware = () => {
+  const ALLOWED_ORIGINS = getAllowedOrigins();
   
-export const corsMiddleware = ({ acceptedOrigins = ALLOWED_ORIGINS } = {}) => {
   return cors({
     origin: (origin, callback) => {
-      if (ALLOWED_ORIGINS.includes(origin)) {
+      if (!origin || ALLOWED_ORIGINS.includes(origin)) {
         callback(null, true);
       } else {
         callback(new Error("Not allowed by CORS"));
