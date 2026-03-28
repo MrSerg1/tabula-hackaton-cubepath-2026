@@ -1,13 +1,13 @@
 import express from 'express';
-import cors from 'cors';
 import { menuRouter } from './routes/products.js';
+import { corsMiddleware } from './middleware/cors.js';
 
 process.loadEnvFile();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
+app.use(corsMiddleware());
 app.use(express.json());
 
 
