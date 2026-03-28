@@ -1,0 +1,22 @@
+.footer {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom));
+  text-align: center;
+  color: #7a5a47;
+}
+
+.text {
+  margin: 0;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.copy {
+  display: block;
+  margin-top: 0.25rem;
+  font-family: 'Manrope', 'Segoe UI', sans-serif;
+  font-size: 0.78rem;
+  color: #9a7a66;
+}

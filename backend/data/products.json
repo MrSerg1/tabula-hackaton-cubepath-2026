@@ -46,5 +46,53 @@
     "ingredients": ["papel de arroz", "zanahoria", "pepino", "menta", "cacahuate"],
     "price": 8.5,
     "image": "/placeholders/food-placeholder.svg"
+  }, 
+  {
+    "id": "menu-7",
+    "title": "Pizza de pepperoni",
+    "description": "Masa delgada, salsa de tomate casera, queso mozzarella y pepperoni crujiente.",
+    "ingredients": [ "salsa de tomate", "queso mozzarella", "pepperoni"],
+    "price": 14.2,
+    "image": "/placeholders/food-placeholder.svg"
+  },
+  {
+    "id": "menu-8",
+    "title": "Sopa ramen tradicional",
+    "description": "Caldo rico, fideos al dente, cerdo desmechado y huevo marinado.",
+    "ingredients": ["caldo", "fideos", "cerdo", "huevo", "cebollin"],
+    "price": 11.5,
+    "image": "/placeholders/food-placeholder.svg"
+  },
+  {
+    "id": "menu-9",
+    "title": "Curry de garbanzos",
+    "description": "Garbanzos tiernos en salsa de curry con leche de coco y arroz basmati.",
+    "ingredients": ["garbanzos", "curry", "leche de coco", "arroz basmati", "cilantro"],
+    "price": 10.3,
+    "image": "/placeholders/food-placeholder.svg"
+  },
+  {
+    "id": "menu-10",
+    "title": "Sándwich de pollo a la parrilla",
+    "description": "Pechuga marinada, lechuga fresca, tomate y mayonesa de chipotle en pan artesanal.",
+    "ingredients": ["pan artesanal", "pollo", "lechuga", "tomate", "mayonesa de chipotle"],
+    "price": 9.75,
+    "image": "/placeholders/food-placeholder.svg"
+  },
+  {
+    "id": "menu-11",
+    "title": "Tostadas de ceviche",
+    "description": "Tostadas crujientes con ceviche fresco de pescado, cebolla morada y cilantro.",
+    "ingredients": ["tostadas", "pescado", "cebolla morada", "cilantro", "limon"],
+    "price": 12.0,
+    "image": "/placeholders/food-placeholder.svg"
+  },
+  {
+    "id": "menu-12",
+    "title": "Burrito de desayuno",
+    "description": "Tortilla grande rellena de huevos revueltos, chorizo, queso y papas.",
+    "ingredients": ["tortilla", "huevos", "chorizo", "queso", "papas"],
+    "price": 8.9,
+    "image": "/placeholders/food-placeholder.svg"
   }
 ]

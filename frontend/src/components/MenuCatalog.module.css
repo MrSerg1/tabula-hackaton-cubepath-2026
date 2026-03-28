@@ -15,7 +15,7 @@
   background:
     radial-gradient(circle at top right, #ffd6b8 0%, rgba(255, 214, 184, 0) 48%),
     linear-gradient(165deg, #fff2df 0%, var(--menu-bg) 46%, #fffef9 100%);
-  padding: 1.2rem 1rem 5.6rem;
+  padding: 1.2rem 1rem 2rem;
 }
 
 .menuHead {
@@ -221,7 +221,7 @@
 
 @media (min-width: 640px) {
   .menuShell {
-    padding: 1.8rem 1.2rem 3rem;
+    padding: 1.8rem 1.2rem 1.6rem;
   }
 
   .menuGrid {
@@ -242,7 +242,7 @@
 
 @media (min-width: 1024px) {
   .menuShell {
-    padding: 2.1rem 1.4rem 4rem;
+    padding: 2.1rem 1.4rem 2rem;
   }
 
   .menuGrid {

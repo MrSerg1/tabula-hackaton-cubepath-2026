@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react';
-import products from '../assets/menuProducts.json';
-import { toSlug, slugToProduct } from '../utils/slugs';
+import { useEffect, useRef } from "react";
+import products from "../assets/menuProducts.json";
+import { toSlug, slugToProduct } from "../utils/slugs";
 
 export function useMenuUrlSync({
   searchParams,
@@ -17,9 +17,9 @@ export function useMenuUrlSync({
     if (hasHydrated.current) return;
 
     const hydratedCart = searchParams
-      .getAll('cart')
+      .getAll("cart")
       .map((entry) => {
-        const [slug, quantityValue] = entry.split(':');
+        const [slug, quantityValue] = entry.split(":");
         const quantity = Number.parseInt(quantityValue, 10);
         const product = slugToProduct.get(slug);
 
@@ -30,8 +30,8 @@ export function useMenuUrlSync({
       .filter(Boolean);
 
     const hydratedSelectedIngredients = {};
-    searchParams.getAll('sin').forEach((entry) => {
-      const sepIdx = entry.indexOf('::');
+    searchParams.getAll("sin").forEach((entry) => {
+      const sepIdx = entry.indexOf("::");
       if (sepIdx === -1) return;
 
       const slug = entry.slice(0, sepIdx);
@@ -46,7 +46,7 @@ export function useMenuUrlSync({
     hydratedCart.forEach((item) => {
       item.excludedIngredients = Object.keys(hydratedSelectedIngredients)
         .filter((key) => key.startsWith(`${item.id}::`))
-        .map((key) => key.split('::')[1]);
+        .map((key) => key.split("::")[1]);
     });
 
     setCart(hydratedCart);
@@ -59,22 +59,22 @@ export function useMenuUrlSync({
     if (!hasHydrated.current) return;
 
     const nextParams = new URLSearchParams(searchParams);
-    nextParams.delete('cart');
-    nextParams.delete('sin');
+    nextParams.delete("cart");
+    nextParams.delete("sin");
 
     cart.forEach((item) => {
       if (item.quantity > 0) {
-        nextParams.append('cart', `${toSlug(item.title)}:${item.quantity}`);
+        nextParams.append("cart", `${toSlug(item.title)}:${item.quantity}`);
       }
     });
 
     Object.entries(selectedIngredients).forEach(([entry, isSelected]) => {
       if (!isSelected) return;
 
-      const [productId, ingredient] = entry.split('::');
+      const [productId, ingredient] = entry.split("::");
       const product = products.find((p) => p.id === productId);
       if (product) {
-        nextParams.append('sin', `${toSlug(product.title)}::${ingredient}`);
+        nextParams.append("sin", `${toSlug(product.title)}::${ingredient}`);
       }
     });
 

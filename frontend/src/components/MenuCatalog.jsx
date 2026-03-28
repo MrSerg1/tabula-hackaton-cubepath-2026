@@ -1,7 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styles from './MenuCatalog.module.css';
-import products from '../assets/menuProducts.json';
 import { FloatingCartBubble } from './FloatingCartBubble';
 import { TableActionsButton } from './TableActionsButton';
 import { DishCard } from './DishCard';
@@ -10,11 +9,29 @@ import { useCartStore, cartItemKey } from '../store/useCartStore';
 import { useOrderStore } from '../store/useOrderStore';
 import { useSelectedIngredients } from '../hooks/useSelectedIngredients';
 import { useMenuUrlSync } from '../hooks/useMenuUrlSync';
+import { useMesa } from '../context/MesaContext';
 
-export function MenuCatalog() {
+const PRODUCTS_PER_PAGE = 5;
+
+export function MenuCatalog({ currentPage = 1, onTotalPagesChange }) {
+  const { mesa } = useMesa();
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+  const offset = Math.max(0, (currentPage - 1) * PRODUCTS_PER_PAGE);
+  const menuUrl = useMemo(() => {
+    if (!mesa) return null;
+
+    const url = new URL('/menu', apiUrl);
+    url.searchParams.set('mesa', String(mesa));
+    url.searchParams.set('limit', String(PRODUCTS_PER_PAGE));
+    url.searchParams.set('offset', String(offset));
+    return url.toString();
+  }, [apiUrl, mesa, offset]);
+
   const [searchParams, setSearchParams] = useSearchParams();
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [products, setProducts] = useState([]);
 
+  //Todo: refactor this, it's a bit too much to put in a single hook, but for demo purposes it's fine.
   const addToCart = useCartStore((state) => state.addToCart);
   const removeFromCart = useCartStore((state) => state.removeFromCart);
   const clearCart = useCartStore((state) => state.clearCart);
@@ -36,6 +53,42 @@ export function MenuCatalog() {
     selectedIngredients,
     setSelectedIngredients,
   });
+  // ── Load products from backend with pagination ───────────────────────────
+  useEffect(() => {
+    if (!menuUrl) return;
+
+    let isMounted = true;
+
+    async function loadProducts() {
+      try {
+        const response = await fetch(menuUrl);
+
+        if (!response.ok) {
+          throw new Error(`Error al obtener el menu: ${response.status}`);
+        }
+
+        const product1 = await response.json();
+
+        if (isMounted) {
+          setProducts(product1.data ?? []);
+          const total = Number(product1.total ?? 0);
+          const limit = Number(product1.limit ?? PRODUCTS_PER_PAGE) || PRODUCTS_PER_PAGE;
+          const nextTotalPages = Math.max(1, Math.ceil(total / limit));
+          if (onTotalPagesChange) {
+            onTotalPagesChange(nextTotalPages);
+          }
+        }
+      } catch (error) {
+        console.error('No se pudo cargar el menu', error);
+      }
+    }
+
+    loadProducts();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [menuUrl, onTotalPagesChange]);
 
   return (
     <section className={styles.menuShell} aria-labelledby="menu-title">
