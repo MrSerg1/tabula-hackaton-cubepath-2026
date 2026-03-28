@@ -1,17 +1,16 @@
 import { Routes, Route } from 'react-router-dom';
 
 // import pages
-import { Home } from './pages/Home';
-import { Login } from './pages/Cart';
-import { MesaProvider } from './context/MesaContext';
+import { Menu } from './pages/Menu.jsx';
+import { Home } from './pages/Home.jsx';
+import { MesaProvider } from './context/MesaContext.jsx';
 
 function App() {
   return (
     <MesaProvider>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/menu" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/menu" element={<Menu />} />
       </Routes>
     </MesaProvider>
   )

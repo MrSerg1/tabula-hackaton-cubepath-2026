@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;700&display=swap');
+
+:root {
+  --home-bg: #fff7eb;
+  --home-surface: #fffefa;
+  --home-primary: #b54708;
+  --home-accent: #ef6f2e;
+  --home-ink: #2c1709;
+  --home-subtle: #5d4a40;
+  --home-border: #f4d2b8;
+}
+
+.homeShell {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 1.2rem;
+  background:
+    radial-gradient(circle at top right, #ffd6b8 0%, rgba(255, 214, 184, 0) 48%),
+    linear-gradient(165deg, #fff2df 0%, var(--home-bg) 46%, #fffef9 100%);
+}
+
+.card {
+  width: min(38rem, 100%);
+  border: 1px solid var(--home-border);
+  border-radius: 1.2rem;
+  background: var(--home-surface);
+  padding: 1.35rem 1.15rem;
+  box-shadow: 0 12px 30px rgba(112, 54, 19, 0.1);
+  text-align: center;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin: 0 0 0.6rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: #ffe8d6;
+  color: var(--home-primary);
+  font-family: 'Manrope', 'Segoe UI', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0;
+  color: var(--home-ink);
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(1.7rem, 8vw, 2.7rem);
+  line-height: 1.08;
+}
+
+.subtitle {
+  margin: 0.75rem auto 1.2rem;
+  max-width: 30ch;
+  color: var(--home-subtle);
+  font-family: 'Manrope', 'Segoe UI', sans-serif;
+  font-size: 0.98rem;
+  line-height: 1.45;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 2.8rem;
+  padding: 0.7rem 1.25rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--home-accent) 65%, #ffffff 35%);
+  background: linear-gradient(135deg, #c75417 0%, var(--home-accent) 100%);
+  color: #fff7f0;
+  font-family: 'Manrope', 'Segoe UI', sans-serif;
+  font-size: 0.94rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgba(153, 57, 10, 0.22);
+  transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+}
+
+.cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 11px 24px rgba(153, 57, 10, 0.28);
+  filter: saturate(1.05);
+}
+
+.cta:focus-visible {
+  outline: 3px solid #fed7aa;
+  outline-offset: 2px;
+}
+
+@media (min-width: 640px) {
+  .homeShell {
+    padding: 1.8rem;
+  }
+
+  .card {
+    padding: 1.8rem 1.6rem;
+  }
+}
