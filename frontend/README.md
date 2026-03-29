@@ -24,20 +24,9 @@ Bundler: Vite
 
 Despliegue: VPS de cubepath.
 
-📁 Estructura del Proyecto
-
-src/
-├── assets/         # Recursos estáticos (imágenes, logos)
-├── components/     # Componentes reutilizables (Botones, Cards, Navbar)
-├── context/        # Estado global del carrito y la UI
-├── hooks/          # Lógica personalizada (useFetch, useCart)
-├── services/       # Comunicación con la API (VITE_API_URL)
-├── styles/         # Variables globales y hojas de CSS Modules
-└── App.jsx         # Punto de entrada principal
-
 
 🛰️ Integración con el Backend
-El frontend consume una API REST propia alojada en un VPS independiente. Actualmente, el sistema utiliza un flujo de datos dinámico para:
+El frontend consume una API REST propia alojada en un VPS independiente en cubepath. Actualmente, el sistema utiliza un flujo de datos dinámico para:
 
 Obtener el catálogo completo de productos.
 
