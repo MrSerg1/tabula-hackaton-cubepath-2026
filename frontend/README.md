@@ -1,16 +1,48 @@
-# React + Vite
+🎨 Tabula | Menú Digital & Experiencia de Usuario
+Tabula es una interfaz moderna de pedidos diseñada para optimizar la experiencia del comensal en restaurantes de servicio rápido. El enfoque principal ha sido crear una navegación fluida, minimalista y con micro-interacciones que mejoren la percepción de marca.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🚀 Características Principales
+- Interfaz Ultra-Rápida: Construida con React y Vite para una carga instantánea.
 
-Currently, two official plugins are available:
+- Micro-interacciones: Sistema de partículas personalizado y animaciones de feedback visual al añadir productos.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Gestión de Carrito en Tiempo Real: Persistencia y cálculo automático de totales.
 
-## React Compiler
+- Diseño Mobile-First: Optimizado para ser consultado desde códigos QR en mesas físicas.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Arquitectura Desacoplada: Frontend independiente conectado a una API REST técnica.
 
-## Expanding the ESLint configuration
+🛠️ Stack Tecnológico
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Framework: React 18
+
+Estilos: CSS Modules (para un diseño modular y evitar colisiones de clases).
+
+Animaciones: Framer Motion (manejo de estados de presencia y transiciones suaves).
+
+Bundler: Vite
+
+Despliegue: VPS de cubepath.
+
+📁 Estructura del Proyecto
+
+src/
+├── assets/         # Recursos estáticos (imágenes, logos)
+├── components/     # Componentes reutilizables (Botones, Cards, Navbar)
+├── context/        # Estado global del carrito y la UI
+├── hooks/          # Lógica personalizada (useFetch, useCart)
+├── services/       # Comunicación con la API (VITE_API_URL)
+├── styles/         # Variables globales y hojas de CSS Modules
+└── App.jsx         # Punto de entrada principal
+
+
+🛰️ Integración con el Backend
+El frontend consume una API REST propia alojada en un VPS independiente. Actualmente, el sistema utiliza un flujo de datos dinámico para:
+
+Obtener el catálogo completo de productos.
+
+Procesar el envío de órdenes de compra.
+
+✒️ Autor: StejonDev
+
+Nota para Evaluadores: Este proyecto fue desarrollado como trabajo final para la hackaton de cubepath. Se priorizó la implementación de una arquitectura limpia y la optimización del rendimiento en dispositivos móviles.
