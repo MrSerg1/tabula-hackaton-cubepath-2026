@@ -1,5 +1,9 @@
 🎨 Tabula | Menú Digital & Experiencia de Usuario
-Tabula es una interfaz moderna de pedidos diseñada para optimizar la experiencia del comensal en restaurantes de servicio rápido. El enfoque principal ha sido crear una navegación fluida, minimalista y con micro-interacciones que mejoren la percepción de marca.
+
+Descripción: Tabula es una interfaz moderna de pedidos diseñada para optimizar la experiencia del comensal en restaurantes de servicio rápido. El enfoque principal ha sido crear una navegación fluida, minimalista y con micro-interacciones que mejoren la percepción de marca.
+
+Link: https://stejondev.com
+
 
 🚀 Características Principales
 - Interfaz Ultra-Rápida: Construida con React y Vite para una carga instantánea.
