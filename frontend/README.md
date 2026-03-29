@@ -1,41 +1,52 @@
-🎨 Tabula | Menú Digital & Experiencia de Usuario
+# 🍽️ Tabula — Menú Digital
 
-Descripción: Tabula es una interfaz moderna de pedidos diseñada para optimizar la experiencia del comensal en restaurantes de servicio rápido. El enfoque principal ha sido crear una navegación fluida, minimalista y con micro-interacciones que mejoren la percepción de marca.
+> Interfaz moderna de pedidos para restaurantes. Consulta el menú, personaliza tu plato y ordena directo desde la mesa.
 
-Link: https://stejondev.com
+🔗 [stejondev.com](https://stejondev.com)
 
+---
 
-🚀 Características Principales
-- Interfaz Ultra-Rápida: Construida con React y Vite para una carga instantánea.
+## ✨ Características
 
-- Micro-interacciones: Sistema de partículas personalizado y animaciones de feedback visual al añadir productos.
+| | |
+|---|---|
+| ⚡ **Ultra-rápida** | React + Vite para carga instantánea |
+| 📱 **Mobile-first** | Optimizada para escaneo QR en mesa |
+| 🛒 **Carrito en tiempo real** | Persistencia y totales automáticos |
+| 🎛️ **Personalización** | Excluye ingredientes por producto |
+| 🔗 **Arquitectura desacoplada** | Frontend conectado a API REST propia |
 
-- Gestión de Carrito en Tiempo Real: Persistencia y cálculo automático de totales.
+---
 
-- Diseño Mobile-First: Optimizado para ser consultado desde códigos QR en mesas físicas.
+## 🛠️ Stack
 
-- Arquitectura Desacoplada: Frontend independiente conectado a una API REST técnica.
+- **Framework** — React 18
+- **Bundler** — Vite
+- **Estilos** — CSS Modules
+- **Routing** — React Router v7
+- **Estado** — Zustand
+- **Despliegue** — VPS cubepath
 
-🛠️ Stack Tecnológico
+---
 
-Framework: React 18
+## 🛰️ Backend
 
-Estilos: CSS Modules (para un diseño modular y evitar colisiones de clases).
+El frontend consume una API REST propia alojada en VPS independiente. Endpoints activos:
 
-Animaciones: Framer Motion (manejo de estados de presencia y transiciones suaves).
+- `GET /menu` — Catálogo de productos con paginación
+- `POST /orders` — Envío de órdenes de compra
 
-Bundler: Vite
+---
 
-Despliegue: VPS de cubepath.
+## 🚀 Desarrollo local
 
+```bash
+pnpm install
+pnpm dev
+```
 
-🛰️ Integración con el Backend
-El frontend consume una API REST propia alojada en un VPS independiente en cubepath. Actualmente, el sistema utiliza un flujo de datos dinámico para:
+> Requiere variable `VITE_API_URL` apuntando al backend, o corre por defecto en `http://localhost:3000`.
 
-Obtener el catálogo completo de productos.
+---
 
-Procesar el envío de órdenes de compra.
-
-✒️ Autor: StejonDev
-
-Nota para Evaluadores: Este proyecto fue desarrollado como trabajo final para la hackaton de cubepath. Se priorizó la implementación de una arquitectura limpia y la optimización del rendimiento en dispositivos móviles.
+✒️ **Autor:** [StejonDev](https://stejondev.com) — Proyecto final Hackaton cubepath
