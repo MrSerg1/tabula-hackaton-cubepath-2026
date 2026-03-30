@@ -11,7 +11,7 @@ import { useSelectedIngredients } from '../hooks/useSelectedIngredients';
 import { useMenuUrlSync } from '../hooks/useMenuUrlSync';
 import { useMesa } from '../context/MesaContext';
 
-const PRODUCTS_PER_PAGE = 5;
+const PRODUCTS_PER_PAGE = 6;
 
 export function MenuCatalog({ currentPage = 1, onTotalPagesChange }) {
   const { mesa } = useMesa();

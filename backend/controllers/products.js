@@ -1,6 +1,6 @@
 import { ProductModel } from '../models/product.js';
 
-const DEFAULT_LIMIT = 10;
+const DEFAULT_LIMIT = 6;
 
 function parsePositiveInteger(value) {
     if (value === undefined) return null;
