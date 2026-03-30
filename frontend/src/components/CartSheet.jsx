@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import styles from './CartSheet.module.css';
 import { CartItem } from './CartItem';
@@ -49,6 +49,24 @@ function EmptyCartIcon() {
   );
 }
 
+function CheckIcon() {
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <polyline points="20 6 9 17 4 12" />
+    </svg>
+  );
+}
+
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
 function EmptyState() {
@@ -63,7 +81,18 @@ function EmptyState() {
   );
 }
 
-function CartFooter({ total, onOrder }) {
+function CartFooter({ total, onOrder, orderStatus }) {
+  const isLoading = orderStatus === 'loading';
+  const isSuccess = orderStatus === 'success';
+  const isError = orderStatus === 'error';
+
+  const buttonClass = [
+    styles.orderButton,
+    isLoading && styles.orderButtonLoading,
+    isSuccess && styles.orderButtonSuccess,
+    isError && styles.orderButtonError,
+  ].filter(Boolean).join(' ');
+
   return (
     <div className={styles.footer}>
       <div className={styles.totalRow}>
@@ -73,9 +102,31 @@ function CartFooter({ total, onOrder }) {
       <button
         type="button"
         onClick={onOrder}
-        className={styles.orderButton}
+        className={buttonClass}
+        disabled={isLoading || isSuccess}
+        aria-live="polite"
       >
-        Pedir a cocina
+        {isLoading && (
+          <>
+            <span className={styles.skChase} aria-hidden="true">
+              <span className={styles.skChaseDot} />
+              <span className={styles.skChaseDot} />
+              <span className={styles.skChaseDot} />
+              <span className={styles.skChaseDot} />
+              <span className={styles.skChaseDot} />
+              <span className={styles.skChaseDot} />
+            </span>
+            Enviando…
+          </>
+        )}
+        {isSuccess && (
+          <>
+            <CheckIcon />
+            ¡Orden enviada!
+          </>
+        )}
+        {isError && 'Error · Reintentar'}
+        {!isLoading && !isSuccess && !isError && 'Pedir a cocina'}
       </button>
     </div>
   );
@@ -85,9 +136,26 @@ function CartFooter({ total, onOrder }) {
 
 export function CartSheet({ isOpen, onClose, onOrder }) {
   const cart = useCartStore((state) => state.cart);
+  const [orderStatus, setOrderStatus] = useState('idle');
 
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const isEmpty = cart.length === 0;
+
+  useEffect(() => {
+    if (!isOpen) setOrderStatus('idle');
+  }, [isOpen]);
+
+  async function handleOrder() {
+    setOrderStatus('loading');
+    try {
+      await onOrder();
+      setOrderStatus('success');
+      setTimeout(onClose, 1500);
+    } catch {
+      setOrderStatus('error');
+      setTimeout(() => setOrderStatus('idle'), 2000);
+    }
+  }
 
   // Lock body scroll while sheet is open
   useEffect(() => {
@@ -145,7 +213,7 @@ export function CartSheet({ isOpen, onClose, onOrder }) {
               )}
             </div>
 
-            {!isEmpty && <CartFooter total={total} onOrder={onOrder} />}
+            {!isEmpty && <CartFooter total={total} onOrder={handleOrder} orderStatus={orderStatus} />}
           </motion.div>
         </div>
       )}

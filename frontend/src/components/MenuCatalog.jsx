@@ -45,6 +45,12 @@ export function MenuCatalog({ currentPage = 1, onTotalPagesChange }) {
   const { selectedIngredients, setSelectedIngredients, toggleIngredient } =
     useSelectedIngredients();
 
+  async function handleOrder() {
+    await submitOrder({ apiUrl, mesa: Number(mesa), cart });
+    clearCart();
+    setSelectedIngredients({});
+  }
+
   useMenuUrlSync({
     searchParams,
     setSearchParams,
@@ -127,12 +133,7 @@ export function MenuCatalog({ currentPage = 1, onTotalPagesChange }) {
       <CartSheet
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
-        onOrder={() => {
-          submitOrder(cart);
-          clearCart();
-          setSelectedIngredients({});
-          setIsCartOpen(false);
-        }}
+        onOrder={handleOrder}
       />
     </section>
   );

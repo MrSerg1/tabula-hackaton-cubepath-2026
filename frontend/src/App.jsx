@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import { Toaster } from 'sileo';
 
 // import pages
 import { Menu } from './pages/Menu.jsx';
@@ -8,6 +9,7 @@ import { MesaProvider } from './context/MesaContext.jsx';
 function App() {
   return (
     <MesaProvider>
+      <Toaster position="top-center" />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/menu" element={<Menu />} />
