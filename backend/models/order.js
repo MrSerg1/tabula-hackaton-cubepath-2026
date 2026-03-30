@@ -5,6 +5,17 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DB_PATH = join(__dirname, '../data/orders.json');
+const TEMPORARY_MAX_STORED_ORDERS = 15;
+
+// Provisional safeguard. When it is no longer needed, delete this function
+// and replace its usage in create() with: const nextOrders = orders;
+function applyTemporaryOrderStorageLimit(orders) {
+    if (orders.length < TEMPORARY_MAX_STORED_ORDERS) {
+        return orders;
+    }
+
+    return [];
+}
 
 export class OrderModel {
     static async readOrders() {
@@ -25,7 +36,9 @@ export class OrderModel {
 
     static async create(orderData) {
         const orders = await OrderModel.readOrders();
+
         const now = new Date().toISOString();
+        const nextOrders = applyTemporaryOrderStorageLimit(orders);
 
         const newOrder = {
             id: randomUUID(),
@@ -35,8 +48,8 @@ export class OrderModel {
             updatedAt: now,
         };
 
-        orders.push(newOrder);
-        await OrderModel.writeOrders(orders);
+        nextOrders.push(newOrder);
+        await OrderModel.writeOrders(nextOrders);
         return newOrder;
     }
 }

@@ -134,12 +134,13 @@ function CartFooter({ total, onOrder, orderStatus }) {
 
 // ─── Main component ───────────────────────────────────────────────────────────
 
-export function CartSheet({ isOpen, onClose, onOrder }) {
+export function CartSheet({ isOpen, onClose, onOrder, onOrderSuccess }) {
   const cart = useCartStore((state) => state.cart);
   const [orderStatus, setOrderStatus] = useState('idle');
 
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const isEmpty = cart.length === 0;
+  const shouldShowFooter = !isEmpty || orderStatus !== 'idle';
 
   useEffect(() => {
     if (!isOpen) setOrderStatus('idle');
@@ -150,7 +151,10 @@ export function CartSheet({ isOpen, onClose, onOrder }) {
     try {
       await onOrder();
       setOrderStatus('success');
-      setTimeout(onClose, 1500);
+      setTimeout(() => {
+        onOrderSuccess?.();
+        onClose();
+      }, 2800);
     } catch {
       setOrderStatus('error');
       setTimeout(() => setOrderStatus('idle'), 2000);
@@ -213,7 +217,7 @@ export function CartSheet({ isOpen, onClose, onOrder }) {
               )}
             </div>
 
-            {!isEmpty && <CartFooter total={total} onOrder={handleOrder} orderStatus={orderStatus} />}
+            {shouldShowFooter && <CartFooter total={total} onOrder={handleOrder} orderStatus={orderStatus} />}
           </motion.div>
         </div>
       )}

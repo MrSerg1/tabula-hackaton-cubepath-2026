@@ -47,6 +47,9 @@ export function MenuCatalog({ currentPage = 1, onTotalPagesChange }) {
 
   async function handleOrder() {
     await submitOrder({ apiUrl, mesa: Number(mesa), cart });
+  }
+
+  function handleOrderSuccess() {
     clearCart();
     setSelectedIngredients({});
   }
@@ -134,6 +137,7 @@ export function MenuCatalog({ currentPage = 1, onTotalPagesChange }) {
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
         onOrder={handleOrder}
+        onOrderSuccess={handleOrderSuccess}
       />
     </section>
   );

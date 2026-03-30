@@ -219,8 +219,9 @@
 }
 
 .orderButtonSuccess {
-  background: linear-gradient(145deg, #a3612a 0%, #6b3710 100%);
-  box-shadow: 0 8px 24px rgba(107, 55, 16, 0.4);
+  background: linear-gradient(145deg, #22c55e 0%, #15803d 100%);
+  color: #fffaf5;
+  box-shadow: 0 8px 24px rgba(21, 128, 61, 0.38);
 }
 
 .orderButtonError {
