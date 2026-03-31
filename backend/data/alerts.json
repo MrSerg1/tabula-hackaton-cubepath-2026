@@ -1,2 +1,10 @@
 [
+  {
+    "id": "ea457840-f460-4f27-9d9e-5af65af9a70d",
+    "table": 1,
+    "type": "request-bill",
+    "status": "pending",
+    "createdAt": "2026-03-31T20:53:43.938Z",
+    "updatedAt": "2026-03-31T20:53:43.938Z"
+  }
 ]

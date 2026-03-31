@@ -1,22 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './Waiter.module.css';
 import { TableCard } from '../components/TableCard';
-
-// ─── Mock Data (temporal) ────────────────────────────────────────────────────
-// Replace with real API calls once the backend endpoints are ready.
-
-const ALL_TABLES = Array.from({ length: 12 }, (_, i) => i + 1);
-
-const MOCK_ALERTS = {
-  2: [{ id: '1', type: 'call-waiter' }],
-  5: [
-    { id: '2', type: 'request-bill' },
-    { id: '3', type: 'clean-table' },
-  ],
-  7: [{ id: '4', type: 'call-waiter' }],
-};
-
-const MOCK_ORDERS = { 2: 1, 3: 2, 5: 3, 7: 1, 9: 2 };
+import { requestJson } from '../utils/requestJson';
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -28,22 +13,52 @@ function countTotalOrders(orders) {
   return Object.values(orders).reduce((sum, n) => sum + n, 0);
 }
 
-// Only tables with at least one alert or pending order are shown.
-function getActiveTables(tables, alerts, orders) {
-  return tables.filter(
-    (n) => (alerts[n]?.length ?? 0) > 0 || (orders[n] ?? 0) > 0,
-  );
-}
-
 // ─── Waiter ──────────────────────────────────────────────────────────────────
 
 export function Waiter() {
-  const [alerts] = useState(MOCK_ALERTS);
-  const [orders] = useState(MOCK_ORDERS);
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
-  const activeTables = getActiveTables(ALL_TABLES, alerts, orders);
-  const totalAlerts  = countTotalAlerts(alerts);
-  const totalOrders  = countTotalOrders(orders);
+  const [alerts, setAlerts] = useState({});
+  const [orders, setOrders] = useState({});
+  const [activeTables, setActiveTables] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function fetchDashboard() {
+      try {
+        setLoading(true);
+        setError(null);
+        const data = await requestJson(`${apiUrl}/waiter`, { signal: controller.signal });
+
+        const newAlerts = {};
+        const newOrders = {};
+        const tableNumbers = [];
+
+        for (const entry of data.tables) {
+          newAlerts[entry.table] = entry.alerts;
+          newOrders[entry.table] = entry.orders.length;
+          tableNumbers.push(entry.table);
+        }
+
+        setAlerts(newAlerts);
+        setOrders(newOrders);
+        setActiveTables(tableNumbers);
+      } catch (err) {
+        if (err.name !== 'AbortError') setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchDashboard();
+    return () => controller.abort();
+  }, []);
+
+  const totalAlerts = countTotalAlerts(alerts);
+  const totalOrders = countTotalOrders(orders);
 
   return (
     <div className={styles.shell}>
@@ -61,7 +76,16 @@ export function Waiter() {
         </div>
       </header>
 
-      {activeTables.length === 0 ? (
+      {loading ? (
+        <div className={styles.empty}>
+          <p className={styles.emptyText}>Cargando…</p>
+        </div>
+      ) : error ? (
+        <div className={styles.empty}>
+          <h2 className={styles.emptyTitle}>Error</h2>
+          <p className={styles.emptyText}>{error}</p>
+        </div>
+      ) : activeTables.length === 0 ? (
         <div className={styles.empty}>
           <h2 className={styles.emptyTitle}>Todo en orden</h2>
           <p className={styles.emptyText}>Sin actividad en este momento.</p>
