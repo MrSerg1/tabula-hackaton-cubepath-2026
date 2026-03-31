@@ -12,19 +12,23 @@
 |---|---|
 | ⚡ **Ultra-rápida** | React + Vite para carga instantánea |
 | 📱 **Mobile-first** | Optimizada para escaneo QR en mesa |
-| 🛒 **Carrito en tiempo real** | Persistencia y totales automáticos |
+| 🛒 **Carrito en tiempo real** | Persistencia con Zustand y useContext |
 | 🎛️ **Personalización** | Excluye ingredientes por producto |
+| 🔔 **Acciones de mesa** | Llamar mesero, pedir cuenta, limpiar mesa |
+| 🎨 **Animaciones fluidas** | Framer Motion para transiciones |
 | 🔗 **Arquitectura desacoplada** | Frontend conectado a API REST propia |
 
 ---
 
 ## 🛠️ Stack
 
-- **Framework** — React 18
+- **Framework** — React 19
 - **Bundler** — Vite
 - **Estilos** — CSS Modules
 - **Routing** — React Router v7
-- **Estado** — Zustand
+- **Estado** — Zustand + Context
+- **Animaciones** — Framer Motion
+- **Notificaciones** — Sileo
 - **Despliegue** — VPS cubepath
 
 ---
@@ -35,6 +39,7 @@ El frontend consume una API REST propia alojada en VPS independiente. Endpoints 
 
 - `GET /menu` — Catálogo de productos con paginación
 - `POST /orders` — Envío de órdenes de compra
+- `POST /alerts` — Acciones de mesa (llamar mesero, pedir cuenta, limpiar)
 
 ---
 

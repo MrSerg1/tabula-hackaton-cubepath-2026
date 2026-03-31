@@ -69,22 +69,22 @@ VITE_API_URL=http://localhost:3000
 ## 🛰️ Flujo de la aplicación
 
 ```
-Cliente (QR)
+Cliente escanea QR
     │
     ▼
 / (Home)  ──────────────────────────────────► /menu?mesa=1
                                                     │
-                                         Fetch a la API REST
+                                         GET /menú con paginación
                                                     │
-                                    GET /menu?mesa=1&limit=5&offset=0
+                                    React renderiza catálogo
                                                     │
-                                          Express devuelve JSON
+                         Cliente agrega productos al carrito
                                                     │
-                                    React renderiza catálogo paginado
-                                                    │
-                                    Cliente agrega productos al carrito
-                                                    │
-                                         POST /orders  🔲 pendiente
+                    ┌─────────────────────────────┬────────────────┐
+                    │                             │                │
+                    ▼                             ▼                ▼
+           POST /orders            POST /alerts          etc.
+           (Pedir a cocina)   (Llamar mesero, etc.)
 ```
 
 ---
@@ -93,17 +93,17 @@ Cliente (QR)
 
 ### ✅ Implementados
 
-| Método | Ruta        | Descripción         |
-|--------|-------------|---------------------|
-| `GET`  | `/health`   | Estado del servidor |
-| `GET`  | `/menu`     | Catálogo paginado (`?mesa=&limit=&offset=`) |
-| `GET`  | `/menu/:id` | Detalle de producto |
+| Método | Ruta | Descripción | Parámetros |
+|--------|------|-------------|------------|
+| `GET`  | `/health` | Estado del servidor | — |
+| `GET`  | `/menu` | Catálogo paginado | `mesa`, `limit`, `offset` |
+| `POST` | `/orders` | Enviar orden desde la mesa | `mesa`, `items[]` |
+| `POST` | `/alerts` | Acciones de mesa (mesero, cuenta, limpiar) | `table`, `type` |
 
 ### 🔲 Pendientes
 
 | Método   | Ruta            | Descripción                   |
 |----------|-----------------|-------------------------------|
-| `POST`   | `/orders`       | Enviar orden desde la mesa    |
 | `GET`    | `/orders/:mesa` | Consultar órdenes de una mesa |
 | `PATCH`  | `/orders/:id`   | Actualizar estado de orden    |
 | `DELETE` | `/orders/:id`   | Cancelar orden                |

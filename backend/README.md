@@ -34,17 +34,18 @@ CORS_ALLOWED_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
 
 ### ✅ Implementados
 
-| Método | Ruta | Descripción |
-|--------|------|-------------|
-| `GET` | `/health` | Estado del servidor |
-| `GET` | `/menu?mesa=&limit=&offset=` | Catálogo de productos con paginación |
-| `GET` | `/menu/:id?mesa=` | Detalle de un producto por ID |
+| Método | Ruta | Descripción | Body/Parámetros |
+|--------|------|-------------|------|
+| `GET` | `/health` | Estado del servidor | — |
+| `GET` | `/menu?mesa=&limit=&offset=` | Catálogo de productos con paginación | Query params |
+| `GET` | `/menu/:id?mesa=` | Detalle de un producto por ID | Query params |
+| `POST` | `/orders` | Enviar una nueva orden | `{ mesa, items[] }` |
+| `POST` | `/alerts` | Acciones de mesa (llamar mesero, pedir cuenta, limpiar mesa) | `{ table, type }` |
 
 ### 🔲 Pendientes de implementar
 
 | Método | Ruta | Descripción |
 |--------|------|-------------|
-| `POST` | `/orders` | Enviar una nueva orden desde la mesa |
 | `GET` | `/orders/:mesa` | Consultar órdenes activas de una mesa |
 | `PATCH` | `/orders/:id` | Actualizar estado de una orden |
 | `DELETE` | `/orders/:id` | Cancelar una orden |
@@ -57,16 +58,23 @@ CORS_ALLOWED_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
 backend/
 ├── server.js           # Entry point, middlewares y rutas
 ├── routes/
-│   └── products.js     # Rutas del menú
+│   ├── products.js     # Rutas del menú (GET /menu)
+│   ├── orders.js       # Rutas de órdenes (POST /orders)
+│   └── alerts.js       # Rutas de alertas (POST /alerts)
 ├── controllers/
-│   └── products.js     # Lógica de negocio del menú
+│   ├── products.js     # Lógica del catálogo
+│   ├── orders.js       # Lógica de órdenes
+│   └── alerts.js       # Lógica de alertas
 ├── models/
-│   └── product.js      # Lectura del catálogo desde JSON
+│   ├── product.js      # Lectura del catálogo desde JSON
+│   ├── order.js        # Persistencia de órdenes
+│   └── alert.js        # Persistencia de alertas
 ├── middleware/
 │   └── cors.js         # CORS configurable por .env
 └── data/
     ├── products.json   # Catálogo de productos
-    └── orders.json     # Órdenes (pendiente de implementar)
+    ├── orders.json     # Órdenes guardadas
+    └── alerts.json     # Alertas de mesa guardadas
 ```
 
 ---
