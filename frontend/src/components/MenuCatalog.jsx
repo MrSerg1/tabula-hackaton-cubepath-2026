@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { sileo } from 'sileo';
 import styles from './MenuCatalog.module.css';
 import { FloatingCartBubble } from './FloatingCartBubble';
 import { TableActionsButton } from './TableActionsButton';
@@ -10,11 +11,26 @@ import { useOrderStore } from '../store/useOrderStore';
 import { useSelectedIngredients } from '../hooks/useSelectedIngredients';
 import { useMenuUrlSync } from '../hooks/useMenuUrlSync';
 import { useMesa } from '../context/MesaContext';
+import { requestJson } from '../utils/requestJson';
 
 const PRODUCTS_PER_PAGE = 6;
+const TABLE_ACTION_MESSAGES = {
+  'clean-table': 'Le avisamos al equipo para limpiar tu mesa.',
+  'request-bill': 'La cuenta va en camino.',
+  'call-waiter': 'Un mesero se acercara en breve.',
+};
+
+async function sendTableAlert({ apiUrl, table, type }) {
+  return requestJson(`${apiUrl}/alerts`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ table, type }),
+  });
+}
 
 export function MenuCatalog({ currentPage = 1, onTotalPagesChange }) {
   const { mesa } = useMesa();
+  const tableNumber = Number(mesa);
   const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
   const offset = Math.max(0, (currentPage - 1) * PRODUCTS_PER_PAGE);
   const menuUrl = useMemo(() => {
@@ -54,6 +70,37 @@ export function MenuCatalog({ currentPage = 1, onTotalPagesChange }) {
     setSelectedIngredients({});
   }
 
+  const handleTableAction = useCallback(
+    async (actionId) => {
+      if (!Number.isInteger(tableNumber) || tableNumber <= 0) {
+        sileo.error({
+          title: 'Mesa invalida',
+          description: 'No se pudo identificar el numero de mesa.',
+        });
+        return;
+      }
+
+      try {
+        await sendTableAlert({
+          apiUrl,
+          table: tableNumber,
+          type: actionId,
+        });
+
+        sileo.success({
+          title: 'Solicitud enviada',
+          description: TABLE_ACTION_MESSAGES[actionId] ?? 'Atenderemos tu solicitud pronto.',
+        });
+      } catch (error) {
+        sileo.error({
+          title: 'No se pudo enviar la solicitud',
+          description: error instanceof Error ? error.message : 'Intenta nuevamente.',
+        });
+      }
+    },
+    [apiUrl, tableNumber],
+  );
+
   useMenuUrlSync({
     searchParams,
     setSearchParams,
@@ -66,28 +113,21 @@ export function MenuCatalog({ currentPage = 1, onTotalPagesChange }) {
   useEffect(() => {
     if (!menuUrl) return;
 
-    let isMounted = true;
+    const controller = new AbortController();
 
     async function loadProducts() {
       try {
-        const response = await fetch(menuUrl);
+        const payload = await requestJson(menuUrl, { signal: controller.signal });
 
-        if (!response.ok) {
-          throw new Error(`Error al obtener el menu: ${response.status}`);
-        }
-
-        const product1 = await response.json();
-
-        if (isMounted) {
-          setProducts(product1.data ?? []);
-          const total = Number(product1.total ?? 0);
-          const limit = Number(product1.limit ?? PRODUCTS_PER_PAGE) || PRODUCTS_PER_PAGE;
-          const nextTotalPages = Math.max(1, Math.ceil(total / limit));
-          if (onTotalPagesChange) {
-            onTotalPagesChange(nextTotalPages);
-          }
+        setProducts(payload.data ?? []);
+        const total = Number(payload.total ?? 0);
+        const limit = Number(payload.limit ?? PRODUCTS_PER_PAGE) || PRODUCTS_PER_PAGE;
+        const nextTotalPages = Math.max(1, Math.ceil(total / limit));
+        if (onTotalPagesChange) {
+          onTotalPagesChange(nextTotalPages);
         }
       } catch (error) {
+        if (error instanceof Error && error.name === 'AbortError') return;
         console.error('No se pudo cargar el menu', error);
       }
     }
@@ -95,7 +135,7 @@ export function MenuCatalog({ currentPage = 1, onTotalPagesChange }) {
     loadProducts();
 
     return () => {
-      isMounted = false;
+      controller.abort();
     };
   }, [menuUrl, onTotalPagesChange]);
 
@@ -123,7 +163,7 @@ export function MenuCatalog({ currentPage = 1, onTotalPagesChange }) {
         })}
       </div>
 
-      <TableActionsButton onAction={(actionId) => console.log('Mesa:', actionId)} />
+      <TableActionsButton onAction={handleTableAction} />
       <FloatingCartBubble itemCount={itemCount} onClick={() => setIsCartOpen(true)} />
       <CartSheet
         isOpen={isCartOpen}

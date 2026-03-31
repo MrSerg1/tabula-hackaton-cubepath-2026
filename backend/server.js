@@ -1,6 +1,7 @@
 import express from 'express';
 import { menuRouter } from './routes/products.js';
 import { orderRouter } from './routes/orders.js';
+import { alertRouter } from './routes/alerts.js';
 import { corsMiddleware } from './middleware/cors.js';
 
 process.loadEnvFile();
@@ -19,6 +20,7 @@ app.get('/health', (req, res) => {
 
 app.use('/menu', menuRouter);
 app.use('/orders', orderRouter);
+app.use('/alerts', alertRouter);
 
 app.listen(PORT, () => {
     console.log(`Servidor tabula corriendo en http://localhost:${PORT}`);

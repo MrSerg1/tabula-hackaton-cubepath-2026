@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { requestJson } from '../utils/requestJson';
 
 export const useOrderStore = create((set) => ({
   orders: [],
@@ -15,18 +16,12 @@ export const useOrderStore = create((set) => ({
       })),
     };
 
-    const response = await fetch(`${apiUrl}/orders`, {
+    const { data } = await requestJson(`${apiUrl}/orders`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
 
-    if (!response.ok) {
-      const body = await response.json().catch(() => ({}));
-      throw new Error(body.error ?? `Error ${response.status}`);
-    }
-
-    const { data } = await response.json();
     set((state) => ({ orders: [...state.orders, data] }));
     return data;
   },

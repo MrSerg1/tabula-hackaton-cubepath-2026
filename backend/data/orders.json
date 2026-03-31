@@ -56,5 +56,29 @@
     "status": "pending",
     "createdAt": "2026-03-31T04:13:24.327Z",
     "updatedAt": "2026-03-31T04:13:24.327Z"
+  },
+  {
+    "id": "69773083-b135-4efc-bef9-416339f2221d",
+    "mesa": 1,
+    "items": [
+      {
+        "id": "menu-4",
+        "title": "Pasta cremosa al pesto",
+        "quantity": 1,
+        "price": 10.8,
+        "excludedIngredients": []
+      },
+      {
+        "id": "menu-5",
+        "title": "Ensalada mediterranea",
+        "quantity": 1,
+        "price": 9.9,
+        "excludedIngredients": []
+      }
+    ],
+    "total": 20.7,
+    "status": "pending",
+    "createdAt": "2026-03-31T19:28:45.034Z",
+    "updatedAt": "2026-03-31T19:28:45.034Z"
   }
 ]
