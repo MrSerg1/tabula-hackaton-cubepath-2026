@@ -6,5 +6,13 @@
     "status": "pending",
     "createdAt": "2026-03-31T20:53:43.938Z",
     "updatedAt": "2026-03-31T20:53:43.938Z"
+  },
+  {
+    "id": "56acbc77-6ec2-403b-a974-9bbf508d3e6c",
+    "table": 3,
+    "type": "call-waiter",
+    "status": "pending",
+    "createdAt": "2026-03-31T21:00:05.826Z",
+    "updatedAt": "2026-03-31T21:00:05.826Z"
   }
 ]

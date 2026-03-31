@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './Waiter.module.css';
 import { TableCard } from '../components/TableCard';
+import { TableDetailSheet } from '../components/TableDetailSheet';
 import { requestJson } from '../utils/requestJson';
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -9,8 +10,9 @@ function countTotalAlerts(alerts) {
   return Object.values(alerts).reduce((sum, arr) => sum + arr.length, 0);
 }
 
+// orders is { [table]: orderArray } — sum the lengths of each array
 function countTotalOrders(orders) {
-  return Object.values(orders).reduce((sum, n) => sum + n, 0);
+  return Object.values(orders).reduce((sum, arr) => sum + arr.length, 0);
 }
 
 // ─── Waiter ──────────────────────────────────────────────────────────────────
@@ -19,8 +21,9 @@ export function Waiter() {
   const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
   const [alerts, setAlerts] = useState({});
-  const [orders, setOrders] = useState({});
+  const [orders, setOrders] = useState({}); // { [table]: orderObject[] }
   const [activeTables, setActiveTables] = useState([]);
+  const [selectedTable, setSelectedTable] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -39,7 +42,7 @@ export function Waiter() {
 
         for (const entry of data.tables) {
           newAlerts[entry.table] = entry.alerts;
-          newOrders[entry.table] = entry.orders.length;
+          newOrders[entry.table] = entry.orders; // full array, not just count
           tableNumbers.push(entry.table);
         }
 
@@ -61,7 +64,8 @@ export function Waiter() {
   const totalOrders = countTotalOrders(orders);
 
   return (
-    <div className={styles.shell}>
+    <>
+      <div className={styles.shell}>
       <header className={styles.header}>
         <h1 className={styles.title}>Panel del Mesero</h1>
         <div className={styles.stats}>
@@ -97,11 +101,19 @@ export function Waiter() {
               key={tableNumber}
               tableNumber={tableNumber}
               alerts={alerts[tableNumber] ?? []}
-              ordersCount={orders[tableNumber] ?? 0}
+              ordersCount={(orders[tableNumber] ?? []).length}
+              onSelect={() => setSelectedTable(tableNumber)}
             />
           ))}
         </div>
       )}
     </div>
+
+    <TableDetailSheet
+      tableNumber={selectedTable}
+      orders={selectedTable !== null ? (orders[selectedTable] ?? []) : []}
+      onClose={() => setSelectedTable(null)}
+    />
+    </>
   );
 }

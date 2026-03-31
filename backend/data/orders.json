@@ -15,5 +15,78 @@
     "status": "pending",
     "createdAt": "2026-03-31T20:35:13.576Z",
     "updatedAt": "2026-03-31T20:35:13.576Z"
+  },
+  {
+    "id": "06a68585-7516-492e-aeca-b8f499d0f495",
+    "mesa": 1,
+    "items": [
+      {
+        "id": "menu-1",
+        "title": "Tacos de birria",
+        "quantity": 1,
+        "price": 11.9,
+        "excludedIngredients": []
+      },
+      {
+        "id": "menu-2",
+        "title": "Bowl de poke tropical",
+        "quantity": 1,
+        "price": 13.5,
+        "excludedIngredients": []
+      },
+      {
+        "id": "menu-2",
+        "title": "Bowl de poke tropical",
+        "quantity": 1,
+        "price": 13.5,
+        "excludedIngredients": [
+          "ajonjoli"
+        ]
+      }
+    ],
+    "total": 38.9,
+    "status": "pending",
+    "createdAt": "2026-03-31T20:59:28.734Z",
+    "updatedAt": "2026-03-31T20:59:28.734Z"
+  },
+  {
+    "id": "1c63a13c-0adf-4da0-882a-f43a049569ae",
+    "mesa": 3,
+    "items": [
+      {
+        "id": "menu-1",
+        "title": "Tacos de birria",
+        "quantity": 1,
+        "price": 11.9,
+        "excludedIngredients": []
+      },
+      {
+        "id": "menu-1",
+        "title": "Tacos de birria",
+        "quantity": 1,
+        "price": 11.9,
+        "excludedIngredients": [
+          "limon"
+        ]
+      },
+      {
+        "id": "menu-2",
+        "title": "Bowl de poke tropical",
+        "quantity": 1,
+        "price": 13.5,
+        "excludedIngredients": []
+      },
+      {
+        "id": "menu-3",
+        "title": "Hamburguesa smash",
+        "quantity": 1,
+        "price": 12.75,
+        "excludedIngredients": []
+      }
+    ],
+    "total": 50.05,
+    "status": "pending",
+    "createdAt": "2026-03-31T20:59:55.121Z",
+    "updatedAt": "2026-03-31T20:59:55.121Z"
   }
 ]

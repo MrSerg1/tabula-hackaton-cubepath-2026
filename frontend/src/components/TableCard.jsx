@@ -55,7 +55,7 @@ function OrdersRow({ count }) {
 
 // ─── TableCard ───────────────────────────────────────────────────────────────
 
-export function TableCard({ tableNumber, alerts, ordersCount }) {
+export function TableCard({ tableNumber, alerts, ordersCount, onSelect }) {
   const hasAlerts = alerts.length > 0;
   const hasOrders = ordersCount > 0;
   const variant   = resolveVariant(alerts);
@@ -63,6 +63,7 @@ export function TableCard({ tableNumber, alerts, ordersCount }) {
   return (
     <article
       className={`${styles.card} ${variant ? styles[`card--${variant}`] : ''}`}
+      onClick={onSelect}
     >
       <h3 className={styles.tableNumber}>Mesa {tableNumber}</h3>
 
