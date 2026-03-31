@@ -1,0 +1,17 @@
+:root {
+  --menu-bg: #fff7eb;
+  --menu-surface: #fffefa;
+  --menu-primary: #b54708;
+  --menu-accent: #ef6f2e;
+  --menu-ink: #2c1709;
+  --menu-subtle: #5d4a40;
+  --menu-border: #f4d2b8;
+}
+
+.pageShell {
+  min-height: 100svh;
+  background:
+    radial-gradient(circle at top right, #ffd6b8 0%, rgba(255, 214, 184, 0) 48%),
+    linear-gradient(165deg, #fff2df 0%, var(--menu-bg) 46%, #fffef9 100%);
+  padding: 1.2rem 1rem 2rem;
+}

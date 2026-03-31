@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-  margin-top: -0.5rem;
+  margin-top: 1.25rem;
   margin-bottom: 1.75rem;
   flex-wrap: wrap;
   -webkit-user-select: none;
@@ -48,7 +48,7 @@
 @media (max-width: 640px) {
   .pagination {
     gap: 0.35rem;
-    margin-top: -0.35rem;
+    margin-top: 1rem;
     margin-bottom: 1.2rem;
   }
 

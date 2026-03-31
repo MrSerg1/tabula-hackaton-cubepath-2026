@@ -101,14 +101,6 @@ export function MenuCatalog({ currentPage = 1, onTotalPagesChange }) {
 
   return (
     <section className={styles.menuShell} aria-labelledby="menu-title">
-      <div className={styles.menuHead}>
-        <p className={styles.eyebrow}>Menú del día</p>
-        <h1 id="menu-title">Tabula Food</h1>
-        <p className={styles.menuSubtitle}>
-          Menú prototipo para <strong>demostración</strong>.
-        </p>
-      </div>
-
       <div className={styles.menuGrid}>
         {products.map((product) => {
           const excluded = (product.ingredients ?? []).filter(

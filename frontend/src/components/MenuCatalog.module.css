@@ -1,57 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;700&display=swap');
 
-:root {
-  --menu-bg: #fff7eb;
-  --menu-surface: #fffefa;
-  --menu-primary: #b54708;
-  --menu-accent: #ef6f2e;
-  --menu-ink: #2c1709;
-  --menu-subtle: #5d4a40;
-  --menu-border: #f4d2b8;
-}
-
 .menuShell {
-  min-height: 100svh;
-  background:
-    radial-gradient(circle at top right, #ffd6b8 0%, rgba(255, 214, 184, 0) 48%),
-    linear-gradient(165deg, #fff2df 0%, var(--menu-bg) 46%, #fffef9 100%);
-  padding: 1.2rem 1rem 2rem;
-}
-
-.menuHead {
-  max-width: 72ch;
-  margin: 0 auto 1.1rem;
-  text-align: left;
-}
-
-.eyebrow {
-  display: inline-block;
-  margin: 0 0 0.55rem;
-  padding: 0.38rem 0.76rem;
-  border-radius: 999px;
-  background: #ffe8d6;
-  color: var(--menu-primary);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.menuHead h1 {
-  margin: 0;
-  color: var(--menu-ink);
-  font-family: 'Fraunces', Georgia, serif;
-  font-size: clamp(1.85rem, 7vw, 2.8rem);
-  line-height: 1.08;
-  letter-spacing: -0.02em;
-}
-
-.menuSubtitle {
-  margin-top: 0.8rem;
-  color: var(--menu-subtle);
-  font-family: 'Manrope', 'Segoe UI', sans-serif;
-  font-size: 0.98rem;
-  max-width: 58ch;
 }
 
 .menuGrid {
