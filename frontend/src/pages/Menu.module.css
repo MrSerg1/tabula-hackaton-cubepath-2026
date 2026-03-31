@@ -13,5 +13,23 @@
   background:
     radial-gradient(circle at top right, #ffd6b8 0%, rgba(255, 214, 184, 0) 48%),
     linear-gradient(165deg, #fff2df 0%, var(--menu-bg) 46%, #fffef9 100%);
-  padding: 1.2rem 1rem 2rem;
+  padding: 1.2rem 0 2rem;
+}
+
+.contentWrapper {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 640px) {
+  .contentWrapper {
+    padding: 0 1.2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .contentWrapper {
+    padding: 0 1.4rem;
+  }
 }

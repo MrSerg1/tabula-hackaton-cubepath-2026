@@ -7,8 +7,6 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.95rem;
-  max-width: 72rem;
-  margin: 0 auto;
 }
 
 .dishCard {
@@ -170,7 +168,7 @@
 
 @media (min-width: 640px) {
   .menuShell {
-    padding: 1.8rem 1.2rem 1.6rem;
+    padding: 1.8rem 0 1.6rem;
   }
 
   .menuGrid {
@@ -191,7 +189,7 @@
 
 @media (min-width: 1024px) {
   .menuShell {
-    padding: 2.1rem 1.4rem 2rem;
+    padding: 2.1rem 0 2rem;
   }
 
   .menuGrid {

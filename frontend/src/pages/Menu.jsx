@@ -28,13 +28,15 @@ export function Menu() {
   return (
     <>
       <div className={styles.pageShell}>
-        <MenuHeader />
-        <MenuCatalog currentPage={currentPage} onTotalPagesChange={setTotalPages} />
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
+        <div className={styles.contentWrapper}>
+          <MenuHeader />
+          <MenuCatalog currentPage={currentPage} onTotalPagesChange={setTotalPages} />
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        </div>
       </div>
       <Footer />
     </>
