@@ -34,6 +34,10 @@ export class OrderModel {
         await writeFile(DB_PATH, JSON.stringify(orders, null, 2), 'utf-8');
     }
 
+    static async getAll() {
+        return OrderModel.readOrders();
+    }
+
     static async create(orderData) {
         const orders = await OrderModel.readOrders();
 

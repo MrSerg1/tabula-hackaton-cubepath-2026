@@ -34,6 +34,10 @@ export class AlertModel {
         await writeFile(DB_PATH, JSON.stringify(alerts, null, 2), 'utf-8');
     }
 
+    static async getAll() {
+        return AlertModel.readAlerts();
+    }
+
     static async create(alertData) {
         const alerts = await AlertModel.readAlerts();
 
