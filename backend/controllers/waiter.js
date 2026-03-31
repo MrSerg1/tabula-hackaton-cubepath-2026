@@ -14,7 +14,7 @@ export class WaiterController {
         const tableMap = new Map();
 
         for (const order of pendingOrders) {
-            const key = order.table;
+            const key = order.mesa;
             if (!tableMap.has(key)) tableMap.set(key, { table: key, orders: [], alerts: [] });
             tableMap.get(key).orders.push(order);
         }
