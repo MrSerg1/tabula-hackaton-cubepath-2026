@@ -1,2 +1,19 @@
 [
+  {
+    "id": "445807a3-93ae-425f-a5eb-9e716f1da032",
+    "mesa": 1,
+    "items": [
+      {
+        "id": "menu-1",
+        "title": "Tacos de birria",
+        "quantity": 1,
+        "price": 11.9,
+        "excludedIngredients": []
+      }
+    ],
+    "total": 11.9,
+    "status": "pending",
+    "createdAt": "2026-03-31T20:35:13.576Z",
+    "updatedAt": "2026-03-31T20:35:13.576Z"
+  }
 ]

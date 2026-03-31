@@ -1,0 +1,191 @@
+:root {
+  --waiter-bg: #f8f4f0;
+  --waiter-surface: #ffffff;
+  --waiter-primary: #b54708;
+  --waiter-accent: #ef6f2e;
+  --waiter-ink: #2c1709;
+  --waiter-subtle: #a0826d;
+  --waiter-border: #e8d7c3;
+  --alert-danger: #dc2626;
+  --alert-warning: #f59e0b;
+  --alert-success: #10b981;
+}
+
+.shell {
+  min-height: 100svh;
+  background: var(--waiter-bg);
+  padding: 1.5rem 1rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--waiter-ink);
+  margin: 0;
+  font-family: 'Fraunces', Georgia, serif;
+}
+
+.stats {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--waiter-subtle);
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.statValue {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--waiter-primary);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.tableCard {
+  background: var(--waiter-surface);
+  border: 2px solid var(--waiter-border);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.tableCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(181, 71, 8, 0.1);
+}
+
+.tableCard.alert {
+  border-color: var(--alert-danger);
+  background: rgba(220, 38, 38, 0.04);
+}
+
+.tableCard.warning {
+  border-color: var(--alert-warning);
+  background: rgba(245, 158, 11, 0.04);
+}
+
+.tableName {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--waiter-ink);
+  margin: 0;
+  font-family: 'Fraunces', Georgia, serif;
+}
+
+.alertsBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  width: fit-content;
+}
+
+.alertsBadgeDanger {
+  background: var(--alert-danger);
+  color: #ffffff;
+}
+
+.alertsBadgeWarning {
+  background: var(--alert-warning);
+  color: #ffffff;
+}
+
+.alertsBadgePrimary {
+  background: var(--waiter-primary);
+  color: #ffffff;
+}
+
+.alertsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.alertItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  padding: 0.4rem 0.6rem;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 0.4rem;
+  color: var(--waiter-ink);
+}
+
+.alertIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.2rem;
+  height: 1.2rem;
+  flex-shrink: 0;
+  font-weight: 600;
+}
+
+.alertIconDanger {
+  color: var(--alert-danger);
+}
+
+.alertIconWarning {
+  color: var(--alert-warning);
+}
+
+.alertIconInfo {
+  color: var(--waiter-primary);
+}
+
+.ordersCount {
+  font-size: 0.8rem;
+  color: var(--waiter-subtle);
+  padding: 0.4rem 0.6rem;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 0.4rem;
+  text-align: center;
+}
+
+.empty {
+  text-align: center;
+  padding: 2rem;
+  color: var(--waiter-subtle);
+}
+
+.emptyTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+  color: var(--waiter-ink);
+}
+
+.emptyText {
+  margin: 0;
+  font-size: 0.9rem;
+}

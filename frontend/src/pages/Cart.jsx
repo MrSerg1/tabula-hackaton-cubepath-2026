@@ -1,3 +1,6 @@
-export function Login() {
-  return (<h1>Login</h1>)
+// ⚠️ Esta página ha sido renombrada a Waiter.jsx
+// Ver: src/pages/Waiter.jsx
+
+export function Cart() {
+  return null;
 }
