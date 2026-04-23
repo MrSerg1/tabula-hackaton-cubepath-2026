@@ -1,3 +1,7 @@
+/**
+ * @param {number} value
+ * @returns {string}
+ */
 export const formatPrice = (value) =>
   new Intl.NumberFormat('es-PE', {
     style: 'currency',

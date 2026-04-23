@@ -1,3 +1,9 @@
+/**
+ * @template T
+ * @param {string | URL} url
+ * @param {RequestInit} [options]
+ * @returns {Promise<T>}
+ */
 export async function requestJson(url, options = {}) {
   const response = await fetch(url, options);
   const payload = await response.json().catch(() => ({}));
