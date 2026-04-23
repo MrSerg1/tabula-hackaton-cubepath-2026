@@ -1,23 +1,47 @@
 import { create } from 'zustand';
 
+/**
+ * @typedef {import('../types').CartInputItem} CartInputItem
+ * @typedef {import('../types').CartItem} CartItem
+ * @typedef {import('../types').CartStore} CartStore
+ * @typedef {import('../types').Product} Product
+ */
+
 // Unique key per (product + ingredient combination)
+/**
+ * @param {string} productId
+ * @param {string[]} excludedIngredients
+ * @returns {string}
+ */
 export function cartItemKey(productId, excludedIngredients) {
   return `${productId}::${[...excludedIngredients].sort().join(',')}`;
 }
 
+/**
+ * @param {CartInputItem} item
+ * @returns {CartItem}
+ */
 function ensureCartKey(item) {
   if (item.cartKey) return item;
   return { ...item, cartKey: cartItemKey(item.id, item.excludedIngredients ?? []) };
 }
 
+/** @type {import('zustand').UseBoundStore<import('zustand').StoreApi<CartStore>>} */
 export const useCartStore = create((set) => ({
   cart: [],
 
   // Normalize items on hydration (e.g. from URL sync)
+  /**
+   * @param {CartInputItem[]} nextCart
+   */
   setCart: (nextCart) => set({ cart: nextCart.map(ensureCartKey) }),
 
   // Same product + same excluded ingredients → increment quantity
   // Same product + different excluded ingredients → new entry
+  /**
+   * @param {Product} product
+   * @param {string[]} [excludedIngredients]
+   */
   addToCart: (product, excludedIngredients = []) => {
     const key = cartItemKey(product.id, excludedIngredients);
     set((state) => {
@@ -39,6 +63,9 @@ export const useCartStore = create((set) => ({
   },
 
   // Decrement quantity or remove entry if quantity reaches 0
+  /**
+   * @param {string} cartKey
+   */
   removeFromCart: (cartKey) => {
     set((state) => {
       const existing = state.cart.find((item) => item.cartKey === cartKey);
@@ -55,6 +82,9 @@ export const useCartStore = create((set) => ({
   },
 
   // Remove an entry entirely regardless of quantity
+  /**
+   * @param {string} cartKey
+   */
   deleteCartItem: (cartKey) => {
     set((state) => ({ cart: state.cart.filter((item) => item.cartKey !== cartKey) }));
   },

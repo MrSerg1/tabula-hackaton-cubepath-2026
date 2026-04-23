@@ -1,10 +1,22 @@
 import { create } from 'zustand';
 import { requestJson } from '../utils/requestJson';
 
+/**
+ * @typedef {import('../types').OrderStore} OrderStore
+ * @typedef {import('../types').SubmitOrderInput} SubmitOrderInput
+ * @typedef {import('../types').CreateOrderRequest} CreateOrderRequest
+ * @typedef {import('../types').CreateOrderResponse} CreateOrderResponse
+ */
+
+/** @type {import('zustand').UseBoundStore<import('zustand').StoreApi<OrderStore>>} */
 export const useOrderStore = create((set) => ({
   orders: [],
 
+  /**
+   * @param {SubmitOrderInput} param0
+   */
   submitOrder: async ({ apiUrl, mesa, cart }) => {
+    /** @type {CreateOrderRequest} */
     const payload = {
       mesa,
       items: cart.map((item) => ({
