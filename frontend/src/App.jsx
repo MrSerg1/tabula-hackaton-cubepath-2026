@@ -5,7 +5,7 @@ import { Toaster } from 'sileo';
 import { Waiter } from './pages/Waiter.jsx';
 import { Menu } from './pages/Menu.jsx';
 import { Home } from './pages/Home.jsx';
-import { MesaProvider } from './context/MesaContext.jsx';
+import { MesaProvider } from './context/MesaContext';
 
 function App() {
   return (

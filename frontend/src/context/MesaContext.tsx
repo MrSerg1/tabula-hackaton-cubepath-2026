@@ -1,11 +1,12 @@
+import type { PropsWithChildren } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { MesaContext } from './mesaContext';
 
-export function MesaProvider({ children }) {
+export function MesaProvider({ children }: PropsWithChildren) {
   const [searchParams, setSearchParams] = useSearchParams();
   const mesa = searchParams.get('mesa');
 
-  const setMesa = (mesaValue) => {
+  const setMesa = (mesaValue: string | number | null | undefined): void => {
     const nextParams = new URLSearchParams(searchParams);
 
     if (mesaValue === null || mesaValue === undefined || mesaValue === '') {
