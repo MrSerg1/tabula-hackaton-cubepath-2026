@@ -58,7 +58,7 @@ export function Waiter() {
 
     fetchDashboard();
     return () => controller.abort();
-  }, []);
+  }, [apiUrl]);
 
   const totalAlerts = countTotalAlerts(alerts);
   const totalOrders = countTotalOrders(orders);

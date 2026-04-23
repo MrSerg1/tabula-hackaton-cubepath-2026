@@ -5,8 +5,6 @@ import { formatPrice } from '../utils/formatPrice';
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
 function IngredientTag({ productId, ingredient, isSelected, onToggle }) {
-  const ingredientId = `${productId}::${ingredient}`;
-
   return (
     <li>
       <button

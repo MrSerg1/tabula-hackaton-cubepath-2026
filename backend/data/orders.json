@@ -112,5 +112,29 @@
     "status": "pending",
     "createdAt": "2026-03-31T22:03:36.308Z",
     "updatedAt": "2026-03-31T22:03:36.308Z"
+  },
+  {
+    "id": "0a6a1562-f7c2-4058-86e4-a961f7189264",
+    "mesa": 1,
+    "items": [
+      {
+        "id": "menu-3",
+        "title": "Hamburguesa smash",
+        "quantity": 2,
+        "price": 12.75,
+        "excludedIngredients": []
+      },
+      {
+        "id": "menu-2",
+        "title": "Bowl de poke tropical",
+        "quantity": 1,
+        "price": 13.5,
+        "excludedIngredients": []
+      }
+    ],
+    "total": 39,
+    "status": "pending",
+    "createdAt": "2026-04-23T01:02:29.536Z",
+    "updatedAt": "2026-04-23T01:02:29.536Z"
   }
 ]

@@ -5,6 +5,8 @@ import { CartItem } from './CartItem';
 import { useCartStore } from '../store/useCartStore';
 import { formatPrice } from '../utils/formatPrice';
 
+const MotionDiv = motion.div;
+
 // ─── Icons ────────────────────────────────────────────────────────────────────
 
 function CloseIcon() {
@@ -142,9 +144,10 @@ export function CartSheet({ isOpen, onClose, onOrder, onOrderSuccess }) {
   const isEmpty = cart.length === 0;
   const shouldShowFooter = !isEmpty || orderStatus !== 'idle';
 
-  useEffect(() => {
-    if (!isOpen) setOrderStatus('idle');
-  }, [isOpen]);
+  function handleClose() {
+    setOrderStatus('idle');
+    onClose();
+  }
 
   async function handleOrder() {
     setOrderStatus('loading');
@@ -153,7 +156,7 @@ export function CartSheet({ isOpen, onClose, onOrder, onOrderSuccess }) {
       setOrderStatus('success');
       setTimeout(() => {
         onOrderSuccess?.();
-        onClose();
+        handleClose();
       }, 2800);
     } catch {
       setOrderStatus('error');
@@ -179,16 +182,16 @@ export function CartSheet({ isOpen, onClose, onOrder, onOrderSuccess }) {
           aria-modal="true"
           aria-label="Tu pedido"
         >
-          <motion.div
+          <MotionDiv
             className={styles.backdrop}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.22 }}
-            onClick={onClose}
+            onClick={handleClose}
           />
 
-          <motion.div
+          <MotionDiv
             className={styles.sheet}
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
@@ -201,7 +204,7 @@ export function CartSheet({ isOpen, onClose, onOrder, onOrderSuccess }) {
               <h2 className={styles.title}>Tu pedido</h2>
               <button
                 type="button"
-                onClick={onClose}
+                onClick={handleClose}
                 className={styles.closeButton}
                 aria-label="Cerrar carrito"
               >
@@ -218,7 +221,7 @@ export function CartSheet({ isOpen, onClose, onOrder, onOrderSuccess }) {
             </div>
 
             {shouldShowFooter && <CartFooter total={total} onOrder={handleOrder} orderStatus={orderStatus} />}
-          </motion.div>
+          </MotionDiv>
         </div>
       )}
     </AnimatePresence>

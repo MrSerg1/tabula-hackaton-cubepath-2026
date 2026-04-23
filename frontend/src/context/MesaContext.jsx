@@ -1,7 +1,5 @@
-import { createContext, useContext } from 'react';
 import { useSearchParams } from 'react-router-dom';
-
-const MesaContext = createContext(undefined);
+import { MesaContext } from './mesaContext';
 
 export function MesaProvider({ children }) {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -20,14 +18,4 @@ export function MesaProvider({ children }) {
   };
 
   return <MesaContext.Provider value={{ mesa, setMesa }}>{children}</MesaContext.Provider>;
-}
-
-export function useMesa() {
-  const context = useContext(MesaContext);
-
-  if (!context) {
-    throw new Error('useMesa must be used within MesaProvider');
-  }
-
-  return context;
 }

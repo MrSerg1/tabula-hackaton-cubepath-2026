@@ -2,6 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import styles from './FloatingCartBubble.module.css';
 
+const MotionButton = motion.button;
+const MotionDiv = motion.div;
+const MotionSpan = motion.span;
+
 const PARTICLE_COUNT = 12;
 const PARTICLE_LIFETIME_MS = 760;
 const PARTICLE_COLORS = ['#fdba74', '#fb923c', '#f97316', '#ffedd5', '#fde68a'];
@@ -29,9 +33,11 @@ export function FloatingCartBubble({ itemCount = 0, onClick }) {
   const cleanupTimersRef = useRef(new Set());
 
   useEffect(() => {
+    const timers = cleanupTimersRef.current;
+
     return () => {
-      cleanupTimersRef.current.forEach((timerId) => clearTimeout(timerId));
-      cleanupTimersRef.current.clear();
+      timers.forEach((timerId) => clearTimeout(timerId));
+      timers.clear();
     };
   }, []);
 
@@ -61,7 +67,7 @@ export function FloatingCartBubble({ itemCount = 0, onClick }) {
   }, [itemCount]);
 
   return (
-    <motion.button
+    <MotionButton
       type="button"
       onClick={onClick}
       className={styles.floatingCart}
@@ -79,7 +85,7 @@ export function FloatingCartBubble({ itemCount = 0, onClick }) {
       <div className={styles.particleLayer} aria-hidden="true">
         <AnimatePresence>
           {bursts.map((burst) => (
-            <motion.div
+            <MotionDiv
               key={burst.id}
               className={styles.particleBurst}
               initial={{ opacity: 1, scale: 0.86 }}
@@ -87,7 +93,7 @@ export function FloatingCartBubble({ itemCount = 0, onClick }) {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.18, ease: 'easeOut' }}
             >
-              <motion.span
+              <MotionSpan
                 className={styles.particleGlow}
                 initial={{ scale: 0.35, opacity: 0.55 }}
                 animate={{ scale: 1.7, opacity: 0 }}
@@ -95,7 +101,7 @@ export function FloatingCartBubble({ itemCount = 0, onClick }) {
               />
 
               {burst.particles.map((particle) => (
-                <motion.span
+                <MotionSpan
                   key={particle.id}
                   className={styles.particle}
                   style={{
@@ -118,7 +124,7 @@ export function FloatingCartBubble({ itemCount = 0, onClick }) {
                   }}
                 />
               ))}
-            </motion.div>
+            </MotionDiv>
           ))}
         </AnimatePresence>
       </div>
@@ -141,6 +147,6 @@ export function FloatingCartBubble({ itemCount = 0, onClick }) {
         <path d="M8 4a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2" />
       </svg>
       <span className={styles.badge}>{itemCount}</span>
-    </motion.button>
+    </MotionButton>
   );
 }

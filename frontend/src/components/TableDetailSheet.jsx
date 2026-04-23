@@ -2,6 +2,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import styles from './TableDetailSheet.module.css';
 import { formatPrice } from '../utils/formatPrice';
 
+const MotionDiv = motion.div;
+
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 function formatTime(isoString) {
@@ -108,20 +110,20 @@ export function TableDetailSheet({ tableNumber, orders, onClose }) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <motion.div
+        <MotionDiv
           className={styles.overlay}
           initial="hidden"
           animate="visible"
           exit="hidden"
           variants={backdropVariants}
         >
-          <motion.div
+          <MotionDiv
             className={styles.backdrop}
             onClick={onClose}
             aria-hidden="true"
           />
 
-          <motion.div
+          <MotionDiv
             className={styles.sheet}
             variants={sheetVariants}
             role="dialog"
@@ -151,8 +153,8 @@ export function TableDetailSheet({ tableNumber, orders, onClose }) {
                 <OrderTicket key={order.id} order={order} index={index} />
               ))}
             </div>
-          </motion.div>
-        </motion.div>
+          </MotionDiv>
+        </MotionDiv>
       )}
     </AnimatePresence>
   );

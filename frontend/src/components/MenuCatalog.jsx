@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { sileo } from 'sileo';
+
 import styles from './MenuCatalog.module.css';
+
 import { FloatingCartBubble } from './FloatingCartBubble';
 import { TableActionsButton } from './TableActionsButton';
 import { DishCard } from './DishCard';
@@ -10,7 +12,7 @@ import { useCartStore, cartItemKey } from '../store/useCartStore';
 import { useOrderStore } from '../store/useOrderStore';
 import { useSelectedIngredients } from '../hooks/useSelectedIngredients';
 import { useMenuUrlSync } from '../hooks/useMenuUrlSync';
-import { useMesa } from '../context/MesaContext';
+import { useMesa } from '../context/useMesa';
 import { requestJson } from '../utils/requestJson';
 
 const PRODUCTS_PER_PAGE = 6;
@@ -102,6 +104,8 @@ export function MenuCatalog({ currentPage = 1, onTotalPagesChange }) {
   );
 
   useMenuUrlSync({
+    apiUrl,
+    mesa,
     searchParams,
     setSearchParams,
     cart,

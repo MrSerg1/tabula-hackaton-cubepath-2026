@@ -1,6 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import styles from './AddToCartButton.module.css';
 
+const MotionDiv = motion.div;
+
 function PlusIcon() {
   return (
     <svg
@@ -45,7 +47,7 @@ export function AddToCartButton({ quantity, onAdd, onRemove, productTitle }) {
     <div className={styles.shell}>
       <AnimatePresence mode="wait" initial={false}>
         {quantity === 0 ? (
-          <motion.div
+          <MotionDiv
             key="add"
             initial={{ scale: 0.84, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -64,9 +66,9 @@ export function AddToCartButton({ quantity, onAdd, onRemove, productTitle }) {
                 Pedir
               </span>
             </button>
-          </motion.div>
+          </MotionDiv>
         ) : (
-          <motion.div
+          <MotionDiv
             key="quantity"
             initial={{ width: 42, opacity: 0 }}
             animate={{ width: 108, opacity: 1 }}
@@ -95,7 +97,7 @@ export function AddToCartButton({ quantity, onAdd, onRemove, productTitle }) {
             >
               <PlusIcon />
             </button>
-          </motion.div>
+          </MotionDiv>
         )}
       </AnimatePresence>
     </div>

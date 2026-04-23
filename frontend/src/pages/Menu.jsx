@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styles from './Menu.module.css';
 import { MenuHeader } from '../components/MenuHeader';
@@ -12,18 +12,18 @@ export function Menu() {
   const currentPage = Number.isNaN(parsedPage) || parsedPage < 1 ? 1 : parsedPage;
   const [totalPages, setTotalPages] = useState(1);
 
-  const handlePageChange = (page) => {
+  const handlePageChange = useCallback((page) => {
     const nextPage = Math.min(Math.max(page, 1), totalPages);
     const nextParams = new URLSearchParams(searchParams);
     nextParams.set('page', String(nextPage));
     setSearchParams(nextParams, { replace: true });
-  };
+  }, [searchParams, setSearchParams, totalPages]);
 
   useEffect(() => {
     if (currentPage > totalPages) {
       handlePageChange(totalPages);
     }
-  }, [currentPage, totalPages]);
+  }, [currentPage, totalPages, handlePageChange]);
 
   return (
     <>
