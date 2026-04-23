@@ -32,6 +32,7 @@ export type {
 
 export type {
   CartItem,
+  CartInputItem,
   SelectedIngredientsMap,
   OrderSubmitStatus,
   MesaContextValue,
@@ -43,4 +44,5 @@ export type {
   OrderActions,
   OrderStore,
   UseSelectedIngredientsResult,
+  CartSheetProps,
 } from './state';

@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import styles from './CartSheet.module.css';
-import { CartItem } from './CartItem';
+import { CartItem as CartItemRow } from './CartItem';
 import { useCartStore } from '../store/useCartStore';
 import { formatPrice } from '../utils/formatPrice';
+import type { CartSheetProps, OrderSubmitStatus } from '../types';
 
 const MotionDiv = motion.div;
-
-// ─── Icons ────────────────────────────────────────────────────────────────────
 
 function CloseIcon() {
   return (
@@ -69,8 +68,6 @@ function CheckIcon() {
   );
 }
 
-// ─── Sub-components ───────────────────────────────────────────────────────────
-
 function EmptyState() {
   return (
     <div className={styles.empty}>
@@ -83,7 +80,13 @@ function EmptyState() {
   );
 }
 
-function CartFooter({ total, onOrder, orderStatus }) {
+interface CartFooterProps {
+  total: number;
+  onOrder: () => void;
+  orderStatus: OrderSubmitStatus;
+}
+
+function CartFooter({ total, onOrder, orderStatus }: CartFooterProps) {
   const isLoading = orderStatus === 'loading';
   const isSuccess = orderStatus === 'success';
   const isError = orderStatus === 'error';
@@ -93,7 +96,9 @@ function CartFooter({ total, onOrder, orderStatus }) {
     isLoading && styles.orderButtonLoading,
     isSuccess && styles.orderButtonSuccess,
     isError && styles.orderButtonError,
-  ].filter(Boolean).join(' ');
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   return (
     <div className={styles.footer}>
@@ -134,22 +139,20 @@ function CartFooter({ total, onOrder, orderStatus }) {
   );
 }
 
-// ─── Main component ───────────────────────────────────────────────────────────
-
-export function CartSheet({ isOpen, onClose, onOrder, onOrderSuccess }) {
+export function CartSheet({ isOpen, onClose, onOrder, onOrderSuccess }: CartSheetProps) {
   const cart = useCartStore((state) => state.cart);
-  const [orderStatus, setOrderStatus] = useState('idle');
+  const [orderStatus, setOrderStatus] = useState<OrderSubmitStatus>('idle');
 
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const isEmpty = cart.length === 0;
   const shouldShowFooter = !isEmpty || orderStatus !== 'idle';
 
-  function handleClose() {
+  function handleClose(): void {
     setOrderStatus('idle');
     onClose();
   }
 
-  async function handleOrder() {
+  async function handleOrder(): Promise<void> {
     setOrderStatus('loading');
     try {
       await onOrder();
@@ -164,7 +167,6 @@ export function CartSheet({ isOpen, onClose, onOrder, onOrderSuccess }) {
     }
   }
 
-  // Lock body scroll while sheet is open
   useEffect(() => {
     if (!isOpen) return;
     document.body.style.overflow = 'hidden';
@@ -176,12 +178,7 @@ export function CartSheet({ isOpen, onClose, onOrder, onOrderSuccess }) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div
-          className={styles.overlay}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Tu pedido"
-        >
+        <div className={styles.overlay} role="dialog" aria-modal="true" aria-label="Tu pedido">
           <MotionDiv
             className={styles.backdrop}
             initial={{ opacity: 0 }}
@@ -216,11 +213,13 @@ export function CartSheet({ isOpen, onClose, onOrder, onOrderSuccess }) {
               {isEmpty ? (
                 <EmptyState />
               ) : (
-                cart.map((item) => <CartItem key={item.cartKey} item={item} />)
+                cart.map((item) => <CartItemRow key={item.cartKey} item={item} />)
               )}
             </div>
 
-            {shouldShowFooter && <CartFooter total={total} onOrder={handleOrder} orderStatus={orderStatus} />}
+            {shouldShowFooter && (
+              <CartFooter total={total} onOrder={handleOrder} orderStatus={orderStatus} />
+            )}
           </MotionDiv>
         </div>
       )}

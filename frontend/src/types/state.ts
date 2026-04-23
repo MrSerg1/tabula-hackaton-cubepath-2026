@@ -7,6 +7,8 @@ export interface CartItem extends Product {
   cartKey: string;
 }
 
+export type CartInputItem = Omit<CartItem, 'cartKey'> & Partial<Pick<CartItem, 'cartKey'>>;
+
 export type SelectedIngredientsMap = Record<string, boolean>;
 
 export type OrderSubmitStatus = 'idle' | 'loading' | 'success' | 'error';
@@ -21,7 +23,7 @@ export interface CartState {
 }
 
 export interface CartActions {
-  setCart: (nextCart: CartItem[]) => void;
+  setCart: (nextCart: CartInputItem[]) => void;
   addToCart: (product: Product, excludedIngredients?: string[]) => void;
   removeFromCart: (cartKey: string) => void;
   deleteCartItem: (cartKey: string) => void;
@@ -50,4 +52,11 @@ export interface UseSelectedIngredientsResult {
   selectedIngredients: SelectedIngredientsMap;
   setSelectedIngredients: Dispatch<SetStateAction<SelectedIngredientsMap>>;
   toggleIngredient: (productId: string, ingredient: string) => void;
+}
+
+export interface CartSheetProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onOrder: () => Promise<void>;
+  onOrderSuccess?: () => void;
 }
