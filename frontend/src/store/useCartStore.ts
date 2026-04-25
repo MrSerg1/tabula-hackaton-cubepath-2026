@@ -1,8 +1,11 @@
 import { create } from 'zustand';
-import type { CartInputItem, CartItem, CartStore } from '../types';
+import type { CartInputItem, CartItem, CartStore, ProductId } from '../types';
 
 // Unique key per (product + ingredient combination)
-export function cartItemKey(productId: string, excludedIngredients: string[]): string {
+export function cartItemKey(
+  productId: ProductId,
+  excludedIngredients: CartItem['excludedIngredients'],
+): string {
   return `${productId}::${[...excludedIngredients].sort().join(',')}`;
 }
 

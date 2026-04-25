@@ -1,9 +1,9 @@
 import type { Dispatch, SetStateAction } from 'react';
-import type { Order, Product, TableNumber } from './domain';
+import type { Ingredient, Order, Product, ProductId, TableNumber } from './domain';
 
 export interface CartItem extends Product {
   quantity: number;
-  excludedIngredients: string[];
+  excludedIngredients: Ingredient[];
   cartKey: string;
 }
 
@@ -12,6 +12,8 @@ export type CartInputItem = Omit<CartItem, 'cartKey'> & Partial<Pick<CartItem, '
 export type SelectedIngredientsMap = Record<string, boolean>;
 
 export type OrderSubmitStatus = 'idle' | 'loading' | 'success' | 'error';
+
+export type ToggleIngredient = (productId: ProductId, ingredient: Ingredient) => void;
 
 export interface MesaContextValue {
   mesa: string | null;
@@ -24,7 +26,7 @@ export interface CartState {
 
 export interface CartActions {
   setCart: (nextCart: CartInputItem[]) => void;
-  addToCart: (product: Product, excludedIngredients?: string[]) => void;
+  addToCart: (product: Product, excludedIngredients?: Ingredient[]) => void;
   removeFromCart: (cartKey: string) => void;
   deleteCartItem: (cartKey: string) => void;
   clearCart: () => void;
@@ -51,7 +53,7 @@ export type OrderStore = OrderState & OrderActions;
 export interface UseSelectedIngredientsResult {
   selectedIngredients: SelectedIngredientsMap;
   setSelectedIngredients: Dispatch<SetStateAction<SelectedIngredientsMap>>;
-  toggleIngredient: (productId: string, ingredient: string) => void;
+  toggleIngredient: ToggleIngredient;
 }
 
 export interface CartSheetProps {

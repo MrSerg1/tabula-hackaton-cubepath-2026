@@ -14,26 +14,43 @@ import { useSelectedIngredients } from '../hooks/useSelectedIngredients';
 import { useMenuUrlSync } from '../hooks/useMenuUrlSync';
 import { useMesa } from '../context/useMesa';
 import { requestJson } from '../utils/requestJson';
+import type {
+  CreateAlertRequest,
+  CreateAlertResponse,
+  MenuListResponse,
+  Product,
+  SubmitOrderInput,
+  TableNumber,
+} from '../types';
 
 const PRODUCTS_PER_PAGE = 6;
-const TABLE_ACTION_MESSAGES = {
+const TABLE_ACTION_MESSAGES: Record<CreateAlertRequest['type'], string> = {
   'clean-table': 'Le avisamos al equipo para limpiar tu mesa.',
   'request-bill': 'La cuenta va en camino.',
   'call-waiter': 'Un mesero se acercara en breve.',
 };
 
-async function sendTableAlert({ apiUrl, table, type }) {
-  return requestJson(`${apiUrl}/alerts`, {
+interface SendTableAlertInput extends CreateAlertRequest {
+  apiUrl: SubmitOrderInput['apiUrl'];
+}
+
+async function sendTableAlert({ apiUrl, table, type }: SendTableAlertInput) {
+  return requestJson<CreateAlertResponse>(`${apiUrl}/alerts`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ table, type }),
   });
 }
 
-export function MenuCatalog({ currentPage = 1, onTotalPagesChange }) {
+interface MenuCatalogProps {
+  currentPage?: number;
+  onTotalPagesChange?: (totalPages: number) => void;
+}
+
+export function MenuCatalog({ currentPage = 1, onTotalPagesChange }: MenuCatalogProps) {
   const { mesa } = useMesa();
-  const tableNumber = Number(mesa);
-  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+  const tableNumber: TableNumber = Number(mesa);
+  const apiUrl: SubmitOrderInput['apiUrl'] = import.meta.env.VITE_API_URL || 'http://localhost:3000';
   const offset = Math.max(0, (currentPage - 1) * PRODUCTS_PER_PAGE);
   const menuUrl = useMemo(() => {
     if (!mesa) return null;
@@ -47,9 +64,9 @@ export function MenuCatalog({ currentPage = 1, onTotalPagesChange }) {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<Product[]>([]);
 
-  //Todo: refactor this, it's a bit too much to put in a single hook, but for demo purposes it's fine.
+  // Todo: refactor this, it's a bit too much to put in a single hook, but for demo purposes it's fine.
   const addToCart = useCartStore((state) => state.addToCart);
   const removeFromCart = useCartStore((state) => state.removeFromCart);
   const clearCart = useCartStore((state) => state.clearCart);
@@ -63,17 +80,17 @@ export function MenuCatalog({ currentPage = 1, onTotalPagesChange }) {
   const { selectedIngredients, setSelectedIngredients, toggleIngredient } =
     useSelectedIngredients();
 
-  async function handleOrder() {
-    await submitOrder({ apiUrl, mesa: Number(mesa), cart });
+  async function handleOrder(): Promise<void> {
+    await submitOrder({ apiUrl, mesa: tableNumber, cart });
   }
 
-  function handleOrderSuccess() {
+  function handleOrderSuccess(): void {
     clearCart();
     setSelectedIngredients({});
   }
 
   const handleTableAction = useCallback(
-    async (actionId) => {
+    async (actionId: CreateAlertRequest['type']) => {
       if (!Number.isInteger(tableNumber) || tableNumber <= 0) {
         sileo.error({
           title: 'Mesa invalida',
@@ -113,7 +130,7 @@ export function MenuCatalog({ currentPage = 1, onTotalPagesChange }) {
     selectedIngredients,
     setSelectedIngredients,
   });
-  // ── Load products from backend with pagination ───────────────────────────
+
   useEffect(() => {
     if (!menuUrl) return;
 
@@ -121,7 +138,7 @@ export function MenuCatalog({ currentPage = 1, onTotalPagesChange }) {
 
     async function loadProducts() {
       try {
-        const payload = await requestJson(menuUrl, { signal: controller.signal });
+        const payload = await requestJson<MenuListResponse>(menuUrl, { signal: controller.signal });
 
         setProducts(payload.data ?? []);
         const total = Number(payload.total ?? 0);
@@ -148,7 +165,7 @@ export function MenuCatalog({ currentPage = 1, onTotalPagesChange }) {
       <div className={styles.menuGrid}>
         {products.map((product) => {
           const excluded = (product.ingredients ?? []).filter(
-            (ing) => selectedIngredients[`${product.id}::${ing}`],
+            (ingredient) => selectedIngredients[`${product.id}::${ingredient}`],
           );
           const key = cartItemKey(product.id, excluded);
           const quantity = cart.find((item) => item.cartKey === key)?.quantity ?? 0;

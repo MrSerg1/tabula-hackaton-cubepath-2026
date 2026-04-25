@@ -3,12 +3,13 @@ export type OrderId = string;
 export type AlertId = string;
 export type TableNumber = number;
 export type ISODateString = string;
+export type Ingredient = string;
 
 export interface Product {
   id: ProductId;
   title: string;
   description: string;
-  ingredients: string[];
+  ingredients: Ingredient[];
   price: number;
   image: string;
 }
@@ -18,7 +19,7 @@ export interface OrderItem {
   title: string;
   quantity: number;
   price: number;
-  excludedIngredients: string[];
+  excludedIngredients: Ingredient[];
 }
 
 export type OrderStatus = 'pending';
@@ -38,7 +39,7 @@ export type AlertType = 'call-waiter' | 'request-bill' | 'clean-table';
 export type AlertStatus = 'pending';
 
 export interface Alert {
-  id: string;
+  id: AlertId;
   table: TableNumber;
   type: AlertType;
   status: AlertStatus;

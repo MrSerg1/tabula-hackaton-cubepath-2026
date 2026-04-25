@@ -12,6 +12,7 @@ export type {
   AlertStatus,
   Alert,
   WaiterTable,
+  Ingredient,
 } from './domain';
 
 export type {
@@ -35,6 +36,7 @@ export type {
   CartInputItem,
   SelectedIngredientsMap,
   OrderSubmitStatus,
+  ToggleIngredient,
   MesaContextValue,
   CartState,
   CartActions,

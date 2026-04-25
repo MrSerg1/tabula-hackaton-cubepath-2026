@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import type { SelectedIngredientsMap, UseSelectedIngredientsResult } from '../types';
+import type { SelectedIngredientsMap, ToggleIngredient, UseSelectedIngredientsResult } from '../types';
 
 export function useSelectedIngredients(
   initial: SelectedIngredientsMap = {},
 ): UseSelectedIngredientsResult {
   const [selectedIngredients, setSelectedIngredients] = useState(initial);
 
-  const toggleIngredient = (productId: string, ingredient: string): void => {
+  const toggleIngredient: ToggleIngredient = (productId, ingredient) => {
     const ingredientId = `${productId}::${ingredient}`;
 
     setSelectedIngredients((prev) => ({

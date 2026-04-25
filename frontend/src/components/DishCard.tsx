@@ -1,10 +1,23 @@
 import styles from './MenuCatalog.module.css';
 import { AddToCartButton } from './AddToCartButton';
 import { formatPrice } from '../utils/formatPrice';
+import type {
+  CartItem,
+  Ingredient,
+  Product,
+  ProductId,
+  SelectedIngredientsMap,
+  ToggleIngredient,
+} from '../types';
 
-// ─── Sub-components ───────────────────────────────────────────────────────────
+interface IngredientTagProps {
+  productId: ProductId;
+  ingredient: Ingredient;
+  isSelected: boolean;
+  onToggle: ToggleIngredient;
+}
 
-function IngredientTag({ productId, ingredient, isSelected, onToggle }) {
+function IngredientTag({ productId, ingredient, isSelected, onToggle }: IngredientTagProps) {
   return (
     <li>
       <button
@@ -19,7 +32,19 @@ function IngredientTag({ productId, ingredient, isSelected, onToggle }) {
   );
 }
 
-function IngredientList({ productId, ingredients, selectedIngredients, onToggle }) {
+interface IngredientListProps {
+  productId: ProductId;
+  ingredients: Ingredient[];
+  selectedIngredients: SelectedIngredientsMap;
+  onToggle: ToggleIngredient;
+}
+
+function IngredientList({
+  productId,
+  ingredients,
+  selectedIngredients,
+  onToggle,
+}: IngredientListProps) {
   if (!Array.isArray(ingredients) || ingredients.length === 0) {
     return <p className={styles.footerText}>Sin ingredientes definidos</p>;
   }
@@ -39,7 +64,14 @@ function IngredientList({ productId, ingredients, selectedIngredients, onToggle 
   );
 }
 
-function CardActions({ product, quantity, onAdd, onRemove }) {
+interface CardActionsProps {
+  product: Product;
+  quantity: CartItem['quantity'];
+  onAdd: () => void;
+  onRemove: () => void;
+}
+
+function CardActions({ product, quantity, onAdd, onRemove }: CardActionsProps) {
   return (
     <div className={styles.cardActionSlot}>
       <div className={styles.actionRow}>
@@ -59,7 +91,14 @@ function CardActions({ product, quantity, onAdd, onRemove }) {
   );
 }
 
-// ─── Main component ───────────────────────────────────────────────────────────
+interface DishCardProps {
+  product: Product;
+  quantity: CartItem['quantity'];
+  selectedIngredients: SelectedIngredientsMap;
+  onToggleIngredient: ToggleIngredient;
+  onAdd: () => void;
+  onRemove: () => void;
+}
 
 export function DishCard({
   product,
@@ -68,7 +107,7 @@ export function DishCard({
   onToggleIngredient,
   onAdd,
   onRemove,
-}) {
+}: DishCardProps) {
   return (
     <article className={styles.dishCard}>
       <div className={styles.dishMediaWrap}>
@@ -90,12 +129,7 @@ export function DishCard({
             onToggle={onToggleIngredient}
           />
         </footer>
-        <CardActions
-          product={product}
-          quantity={quantity}
-          onAdd={onAdd}
-          onRemove={onRemove}
-        />
+        <CardActions product={product} quantity={quantity} onAdd={onAdd} onRemove={onRemove} />
       </div>
     </article>
   );
