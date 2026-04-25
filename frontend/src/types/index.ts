@@ -47,4 +47,13 @@ export type {
   OrderStore,
   UseSelectedIngredientsResult,
   CartSheetProps,
+  WaiterAlertsByTable,
+  WaiterOrdersByTable,
+  WaiterCardVariant,
+  WaiterAlertConfig,
+  WaiterAlertConfigMap,
+  TableCardProps,
+  TableDetailSheetProps,
+  WaiterPageState,
+  WaiterOrderItem,
 } from './state';

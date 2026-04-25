@@ -1,23 +1,20 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import styles from './TableDetailSheet.module.css';
 import { formatPrice } from '../utils/formatPrice';
+import type { Ingredient, Order, TableDetailSheetProps, WaiterOrderItem } from '../types';
 
 const MotionDiv = motion.div;
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
-
-function formatTime(isoString) {
+function formatTime(isoString: Order['createdAt']): string {
   return new Date(isoString).toLocaleTimeString('es-PE', {
     hour: '2-digit',
     minute: '2-digit',
   });
 }
 
-function sumItems(items) {
+function sumItems(items: Order['items']): number {
   return items.reduce((acc, item) => acc + item.price * item.quantity, 0);
 }
-
-// ─── Icons ────────────────────────────────────────────────────────────────────
 
 function CloseIcon() {
   return (
@@ -39,33 +36,25 @@ function CloseIcon() {
   );
 }
 
-// ─── Sub-components ───────────────────────────────────────────────────────────
-
-function ExclusionNote({ ingredients }) {
-  if (!ingredients?.length) return null;
-  return (
-    <p className={styles.exclusionNote}>
-      Sin: {ingredients.join(', ')}
-    </p>
-  );
+function ExclusionNote({ ingredients }: { ingredients: Ingredient[] }) {
+  if (!ingredients.length) return null;
+  return <p className={styles.exclusionNote}>Sin: {ingredients.join(', ')}</p>;
 }
 
-function TicketItem({ item }) {
+function TicketItem({ item, index }: { item: WaiterOrderItem; index: number }) {
   return (
     <li className={styles.ticketItem}>
       <div className={styles.ticketItemRow}>
         <span className={styles.quantity}>{item.quantity}×</span>
         <span className={styles.itemName}>{item.title}</span>
-        <span className={styles.itemPrice}>
-          {formatPrice(item.price * item.quantity)}
-        </span>
+        <span className={styles.itemPrice}>{formatPrice(item.price * item.quantity)}</span>
       </div>
       <ExclusionNote ingredients={item.excludedIngredients} />
     </li>
   );
 }
 
-function OrderTicket({ order, index }) {
+function OrderTicket({ order, index }: { order: Order; index: number }) {
   const total = sumItems(order.items);
 
   return (
@@ -76,8 +65,12 @@ function OrderTicket({ order, index }) {
       </header>
 
       <ul className={styles.ticketList}>
-        {order.items.map((item) => (
-          <TicketItem key={item.id} item={item} />
+        {order.items.map((item, itemIndex) => (
+          <TicketItem
+            key={`${item.id}::${item.excludedIngredients.join(',')}::${itemIndex}`}
+            item={item}
+            index={itemIndex}
+          />
         ))}
       </ul>
 
@@ -89,8 +82,6 @@ function OrderTicket({ order, index }) {
   );
 }
 
-// ─── Animation variants ───────────────────────────────────────────────────────
-
 const backdropVariants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1 },
@@ -98,13 +89,11 @@ const backdropVariants = {
 
 const sheetVariants = {
   hidden: { y: '100%' },
-  visible: { y: 0, transition: { type: 'spring', damping: 30, stiffness: 300 } },
+  visible: { y: 0, transition: { type: 'spring' as const, damping: 30, stiffness: 300 } },
   exit: { y: '100%', transition: { duration: 0.22 } },
 };
 
-// ─── TableDetailSheet ─────────────────────────────────────────────────────────
-
-export function TableDetailSheet({ tableNumber, orders, onClose }) {
+export function TableDetailSheet({ tableNumber, orders, onClose }: TableDetailSheetProps) {
   const isOpen = tableNumber !== null;
 
   return (
@@ -117,11 +106,7 @@ export function TableDetailSheet({ tableNumber, orders, onClose }) {
           exit="hidden"
           variants={backdropVariants}
         >
-          <MotionDiv
-            className={styles.backdrop}
-            onClick={onClose}
-            aria-hidden="true"
-          />
+          <MotionDiv className={styles.backdrop} onClick={onClose} aria-hidden="true" />
 
           <MotionDiv
             className={styles.sheet}
@@ -139,11 +124,7 @@ export function TableDetailSheet({ tableNumber, orders, onClose }) {
                   {orders.length} orden{orders.length !== 1 ? 'es' : ''}
                 </span>
               </div>
-              <button
-                className={styles.closeButton}
-                onClick={onClose}
-                aria-label="Cerrar"
-              >
+              <button className={styles.closeButton} onClick={onClose} aria-label="Cerrar">
                 <CloseIcon />
               </button>
             </header>

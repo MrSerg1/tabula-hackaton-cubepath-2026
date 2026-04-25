@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import { Toaster } from 'sileo';
 
 // import pages
-import { Waiter } from './pages/Waiter.jsx';
+import { Waiter } from './pages/Waiter';
 import { Menu } from './pages/Menu.jsx';
 import { Home } from './pages/Home.jsx';
 import { MesaProvider } from './context/MesaContext';

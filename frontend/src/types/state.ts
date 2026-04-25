@@ -1,5 +1,14 @@
 import type { Dispatch, SetStateAction } from 'react';
-import type { Ingredient, Order, Product, ProductId, TableNumber } from './domain';
+import type {
+  Alert,
+  AlertType,
+  Ingredient,
+  Order,
+  OrderItem,
+  Product,
+  ProductId,
+  TableNumber,
+} from './domain';
 
 export interface CartItem extends Product {
   quantity: number;
@@ -62,3 +71,40 @@ export interface CartSheetProps {
   onOrder: () => Promise<void>;
   onOrderSuccess?: () => void;
 }
+
+export type WaiterAlertsByTable = Partial<Record<TableNumber, Alert[]>>;
+
+export type WaiterOrdersByTable = Partial<Record<TableNumber, Order[]>>;
+
+export type WaiterCardVariant = 'danger' | 'warning' | 'primary' | null;
+
+export interface WaiterAlertConfig {
+  label: string;
+  icon: string;
+}
+
+export type WaiterAlertConfigMap = Record<AlertType, WaiterAlertConfig>;
+
+export interface TableCardProps {
+  tableNumber: TableNumber;
+  alerts: Alert[];
+  ordersCount: number;
+  onSelect: () => void;
+}
+
+export interface TableDetailSheetProps {
+  tableNumber: TableNumber | null;
+  orders: Order[];
+  onClose: () => void;
+}
+
+export interface WaiterPageState {
+  alerts: WaiterAlertsByTable;
+  orders: WaiterOrdersByTable;
+  activeTables: TableNumber[];
+  selectedTable: TableNumber | null;
+  loading: boolean;
+  error: string | null;
+}
+
+export type WaiterOrderItem = OrderItem;
