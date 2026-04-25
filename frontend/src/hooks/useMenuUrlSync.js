@@ -1,9 +1,46 @@
 import { useEffect, useRef } from 'react';
 import { requestJson } from '../utils/requestJson';
 
-function parseCartFromParams(searchParams) {
+const CART_ITEM_PARAM = 'item';
+const LEGACY_CART_PARAM = 'cart';
+const SELECTED_INGREDIENT_PARAM = 'sin';
+
+function normalizeIngredients(ingredients) {
+  if (!Array.isArray(ingredients)) return [];
+
+  return [...new Set(
+    ingredients
+      .filter((ingredient) => typeof ingredient === 'string')
+      .map((ingredient) => ingredient.trim())
+      .filter(Boolean),
+  )].sort();
+}
+
+function parseSerializedCartItems(searchParams) {
   return searchParams
-    .getAll('cart')
+    .getAll(CART_ITEM_PARAM)
+    .map((entry) => {
+      try {
+        const parsed = JSON.parse(entry);
+        const id = typeof parsed?.id === 'string' ? parsed.id.trim() : '';
+        const quantity = Number.parseInt(String(parsed?.q ?? ''), 10);
+        const excludedIngredients = normalizeIngredients(parsed?.x);
+
+        if (!id || !Number.isInteger(quantity) || quantity <= 0) {
+          return null;
+        }
+
+        return { id, quantity, excludedIngredients };
+      } catch {
+        return null;
+      }
+    })
+    .filter(Boolean);
+}
+
+function parseLegacyCartFromParams(searchParams) {
+  return searchParams
+    .getAll(LEGACY_CART_PARAM)
     .map((entry) => {
       const separatorIndex = entry.lastIndexOf(':');
       if (separatorIndex === -1) return null;
@@ -20,10 +57,18 @@ function parseCartFromParams(searchParams) {
     .filter(Boolean);
 }
 
-function parseExcludedIngredientsFromParams(searchParams) {
+function serializeCartItem(item) {
+  return JSON.stringify({
+    id: item.id,
+    q: item.quantity,
+    x: normalizeIngredients(item.excludedIngredients ?? []),
+  });
+}
+
+function parseSelectedIngredientsFromParams(searchParams) {
   const selectedIngredients = {};
 
-  searchParams.getAll('sin').forEach((entry) => {
+  searchParams.getAll(SELECTED_INGREDIENT_PARAM).forEach((entry) => {
     const separatorIndex = entry.indexOf('::');
     if (separatorIndex === -1) return;
 
@@ -80,8 +125,11 @@ export function useMenuUrlSync({
     const controller = new AbortController();
 
     async function hydrateFromUrl() {
-      const selectedIngredientsFromUrl = parseExcludedIngredientsFromParams(searchParams);
-      const cartFromUrl = parseCartFromParams(searchParams);
+      const selectedIngredientsFromUrl = parseSelectedIngredientsFromParams(searchParams);
+      const hasSerializedCartItems = searchParams.has(CART_ITEM_PARAM);
+      const cartFromUrl = hasSerializedCartItems
+        ? parseSerializedCartItems(searchParams)
+        : parseLegacyCartFromParams(searchParams);
 
       if (cartFromUrl.length === 0) {
         setCart([]);
@@ -111,17 +159,22 @@ export function useMenuUrlSync({
         }),
       );
 
-      const excludedByProductId = buildExcludedByProductId(selectedIngredientsFromUrl);
+      const excludedByProductId = hasSerializedCartItems
+        ? null
+        : buildExcludedByProductId(selectedIngredientsFromUrl);
 
       const hydratedCart = cartFromUrl
-        .map(({ id, quantity }) => {
+        .map((item) => {
+          const { id, quantity } = item;
           const product = productsById.get(id);
           if (!product) return null;
 
           return {
             ...product,
             quantity,
-            excludedIngredients: excludedByProductId[id] ?? [],
+            excludedIngredients: hasSerializedCartItems
+              ? item.excludedIngredients
+              : (excludedByProductId?.[id] ?? []),
           };
         })
         .filter(Boolean);
@@ -143,18 +196,20 @@ export function useMenuUrlSync({
     if (!hasHydrated.current) return;
 
     const nextParams = new URLSearchParams(searchParams);
-    nextParams.delete('cart');
-    nextParams.delete('sin');
+    nextParams.delete(CART_ITEM_PARAM);
+    nextParams.delete(LEGACY_CART_PARAM);
+    nextParams.delete(SELECTED_INGREDIENT_PARAM);
 
     cart.forEach((item) => {
       if (item.quantity > 0 && item.id) {
-        nextParams.append('cart', `${item.id}:${item.quantity}`);
+        // Keep quantity and exclusions coupled per entry to avoid variant ambiguity.
+        nextParams.append(CART_ITEM_PARAM, serializeCartItem(item));
       }
     });
 
     Object.entries(selectedIngredients).forEach(([entry, isSelected]) => {
       if (!isSelected) return;
-      nextParams.append('sin', entry);
+      nextParams.append(SELECTED_INGREDIENT_PARAM, entry);
     });
 
     if (nextParams.toString() !== searchParams.toString()) {
